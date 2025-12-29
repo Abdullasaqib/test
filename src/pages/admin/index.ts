@@ -1,0 +1,16 @@
+export { default as AdminDashboard } from "./AdminDashboard";
+export { default as AdminRevenue } from "./AdminRevenue";
+export { default as AdminFounders } from "./AdminFounders";
+export { default as AdminUsers } from "./AdminUsers";
+export { default as AdminStudents } from "./AdminStudents";
+export { default as AdminApplications } from "./AdminApplications";
+export { default as AdminEnrollments } from "./AdminEnrollments";
+export { default as AdminCohorts } from "./AdminCohorts";
+export { default as AdminMentors } from "./AdminMentors";
+export { default as AdminSchools } from "./AdminSchools";
+export { default as AdminCurriculum } from "./AdminCurriculum";
+export { default as AdminCurriculumReview } from "./AdminCurriculumReview";
+export { default as AdminContent } from "./AdminContent";
+export { default as AdminAnnouncements } from "./AdminAnnouncements";
+export { default as AdminAnalytics } from "./AdminAnalytics";
+export { default as AdminSettings } from "./AdminSettings";

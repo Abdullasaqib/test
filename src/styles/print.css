@@ -1,0 +1,272 @@
+/* Print-Optimized Styles for Base44 Proposal */
+
+@media print {
+  /* Reset page margins and setup */
+  @page {
+    size: A4;
+    margin: 1.5cm 2cm;
+  }
+
+  /* Global print styles */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  body {
+    font-size: 11pt;
+    line-height: 1.4;
+    color: #000;
+    background: white !important;
+  }
+
+  /* Hide interactive elements */
+  button,
+  .print\\:hidden,
+  nav,
+  footer,
+  [class*="hover:"],
+  [class*="animate"],
+  .sonner,
+  .toast {
+    display: none !important;
+  }
+
+  /* Page break controls */
+  .page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .page-break-avoid {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Section spacing */
+  section {
+    page-break-inside: avoid;
+    margin-bottom: 2rem;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    color: #000;
+  }
+
+  h1 {
+    font-size: 24pt;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 18pt;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h3 {
+    font-size: 14pt;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Cards and containers */
+  [class*="card"],
+  [class*="Card"] {
+    border: 1px solid #e0e0e0 !important;
+    box-shadow: none !important;
+    background: white !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+
+  /* Remove backgrounds and shadows */
+  [class*="bg-gradient"],
+  [class*="backdrop-blur"],
+  [class*="shadow"] {
+    background: white !important;
+    box-shadow: none !important;
+  }
+
+  /* Optimize colors for print */
+  [class*="text-primary"],
+  [class*="text-accent"] {
+    color: #2563eb !important;
+  }
+
+  [class*="text-muted-foreground"] {
+    color: #666 !important;
+  }
+
+  /* Charts and visualizations */
+  [class*="recharts"] {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: avoid;
+  }
+
+  table th,
+  table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  table th {
+    background-color: #f5f5f5 !important;
+    font-weight: bold;
+  }
+
+  /* Lists */
+  ul, ol {
+    page-break-inside: avoid;
+    margin-left: 1.5rem;
+  }
+
+  li {
+    margin-bottom: 0.25rem;
+  }
+
+  /* Badges and labels */
+  [class*="badge"],
+  [class*="Badge"] {
+    border: 1px solid #000 !important;
+    background: white !important;
+    color: #000 !important;
+    padding: 2px 8px;
+  }
+
+  /* Grid layouts - convert to single column for print */
+  [class*="grid"] {
+    display: block !important;
+  }
+
+  [class*="grid"] > * {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Links */
+  a {
+    color: #2563eb;
+    text-decoration: none;
+  }
+
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #666;
+  }
+
+  /* Images */
+  img {
+    max-width: 100%;
+    height: auto;
+    page-break-inside: avoid;
+  }
+
+  /* Timeline elements */
+  [class*="timeline"] {
+    display: block !important;
+  }
+
+  /* Stats and counters */
+  [class*="counter"],
+  [class*="stats"] {
+    page-break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+
+  /* Cover page */
+  .proposal-hero {
+    page-break-after: always;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Section dividers */
+  .section-divider {
+    page-break-before: always;
+  }
+
+  /* Optimize specific proposal sections */
+  .dubai-hub-section,
+  .user-growth-section,
+  .competitive-advantage-section,
+  .partnership-timeline-section {
+    page-break-before: always;
+    page-break-inside: avoid;
+  }
+
+  /* Footer info for each page */
+  @page {
+    @bottom-right {
+      content: "Base44 × LWL Partnership Proposal | Page " counter(page);
+      font-size: 9pt;
+      color: #666;
+    }
+  }
+
+  /* Ensure proper text rendering */
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Remove transitions and animations */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Certificate-specific print styles */
+  .certificate-container {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .certificate-preview {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background: #0d1117 !important;
+    color: white !important;
+  }
+
+  .certificate-preview * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ensure gradient text renders in print */
+  .certificate-preview [class*="bg-gradient"],
+  .certificate-preview [class*="bg-clip-text"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* QR code print optimization */
+  .certificate-preview .qr-code {
+    background: white !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+}

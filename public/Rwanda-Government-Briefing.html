@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXT_ | Rwanda Ministry Partnership Briefing</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #0A0F1C;
+      line-height: 1.6;
+    }
+    
+    .page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px;
+      min-height: 100vh;
+      page-break-after: always;
+    }
+    
+    .page:last-child {
+      page-break-after: auto;
+    }
+    
+    /* Rwanda flag colors */
+    .rwanda-accent {
+      background: linear-gradient(135deg, #00A1DE 0%, #FAD201 50%, #20603D 100%);
+      height: 4px;
+      margin-bottom: 30px;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .logo {
+      font-size: 32px;
+      font-weight: 800;
+      color: #0A0F1C;
+    }
+    
+    .logo span {
+      color: #00A1DE;
+    }
+    
+    .badge {
+      background: linear-gradient(135deg, #00A1DE, #20603D);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #0A0F1C;
+    }
+    
+    h1 .highlight {
+      background: linear-gradient(135deg, #00A1DE, #FAD201, #20603D);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      color: #0A0F1C;
+      border-bottom: 2px solid #00A1DE;
+      padding-bottom: 5px;
+    }
+    
+    p {
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin: 25px 0;
+    }
+    
+    .stat-box {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      border-left: 3px solid #00A1DE;
+    }
+    
+    .stat-box .number {
+      font-size: 24px;
+      font-weight: 800;
+      color: #00A1DE;
+    }
+    
+    .stat-box .label {
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+    }
+    
+    .pilot-box {
+      background: linear-gradient(135deg, #00A1DE10, #FAD20110, #20603D10);
+      border: 2px solid #FAD201;
+      border-radius: 12px;
+      padding: 25px;
+      margin: 25px 0;
+    }
+    
+    .pilot-box h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #20603D;
+    }
+    
+    .pilot-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .pilot-stat {
+      text-align: center;
+    }
+    
+    .pilot-stat .value {
+      font-size: 28px;
+      font-weight: 800;
+      color: #00A1DE;
+    }
+    
+    .pilot-stat .desc {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .includes-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    
+    .includes-list li {
+      font-size: 13px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .includes-list li::before {
+      content: "✓";
+      color: #20603D;
+      font-weight: bold;
+    }
+    
+    .roi-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    .roi-table th {
+      background: #00A1DE;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    
+    .roi-table td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
+    
+    .roi-table tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+    
+    .partner-section {
+      background: linear-gradient(135deg, #20603D10, #FAD20110);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    
+    .partner-section h3 {
+      color: #20603D;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    
+    .partner-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .partner-tag {
+      background: white;
+      border: 1px solid #00A1DE;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 11px;
+      color: #00A1DE;
+    }
+    
+    .timeline {
+      display: flex;
+      justify-content: space-between;
+      margin: 25px 0;
+      position: relative;
+    }
+    
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00A1DE, #FAD201, #20603D);
+    }
+    
+    .timeline-item {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .timeline-item .dot {
+      width: 40px;
+      height: 40px;
+      background: #00A1DE;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    .timeline-item:nth-child(2) .dot { background: #FAD201; color: #0A0F1C; }
+    .timeline-item:nth-child(3) .dot { background: #20603D; }
+    
+    .timeline-item .label {
+      font-size: 11px;
+      color: #666;
+    }
+    
+    .timeline-item .title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0A0F1C;
+    }
+    
+    .contact-box {
+      background: #0A0F1C;
+      color: white;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 30px;
+    }
+    
+    .contact-box h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    
+    .contact-box .email {
+      font-size: 18px;
+      font-weight: 700;
+      color: #00A1DE;
+    }
+    
+    .contact-box .note {
+      font-size: 11px;
+      color: #888;
+      margin-top: 10px;
+    }
+    
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #888;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    
+    @media print {
+      .page {
+        padding: 20px;
+      }
+      
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Page 1 -->
+  <div class="page">
+    <div class="rwanda-accent"></div>
+    
+    <div class="header">
+      <div class="logo">NEXT<span>_</span></div>
+      <div class="badge">Ministry Partnership Briefing</div>
+    </div>
+    
+    <h1>The Next Generation of <span class="highlight">Rwandan Tech Leaders</span> Starts Here</h1>
+    <p class="subtitle">A Strategic Partnership Proposal for Rwanda Development Board & Ministry of Education</p>
+    
+    <h2>Executive Summary</h2>
+    <p>
+      Rwanda has positioned itself as Africa's Singapore—the cleanest cities, the most business-friendly environment, 
+      the boldest vision. But the next phase of growth requires something different: <strong>a generation of young 
+      founders who can build the companies of tomorrow.</strong>
+    </p>
+    <p>
+      NEXT_ is the world's first AI-native entrepreneurship program for students aged 9-16. In 12 weeks, 
+      students discover real problems, validate with real customers, build real products using AI tools, 
+      and launch real businesses. This isn't a classroom exercise—it's a founder factory.
+    </p>
+    
+    <h2>The Global AI Race</h2>
+    <p>Nations that prepare their youth for the AI economy today will lead the next century.</p>
+    
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="number">200M</div>
+        <div class="label">China: Students in AI curriculum</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">100%</div>
+        <div class="label">Singapore: AI mandatory</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">Age 6</div>
+        <div class="label">Estonia: Coding starts</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">#1</div>
+        <div class="label">Israel: Startups per capita</div>
+      </div>
+    </div>
+    
+    <h2>Vision 2050 Alignment</h2>
+    <p>NEXT_ directly supports Rwanda's national transformation goals:</p>
+    <ul style="margin-left: 20px; margin-bottom: 20px;">
+      <li><strong>Knowledge-Based Economy:</strong> Train 100,000 young founders by 2030</li>
+      <li><strong>Youth Employment:</strong> Create job CREATORS, not job seekers (60% under 25)</li>
+      <li><strong>Smart Rwanda:</strong> AI-first digital skills from age 9</li>
+      <li><strong>Regional Hub:</strong> Position Rwanda as Africa's founder factory</li>
+    </ul>
+    
+    <h2>What Students Actually Build</h2>
+    <p>Not presentations. Not theory. Real products solving real African problems.</p>
+    
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="dot">1-4</div>
+        <div class="title">Discovery</div>
+        <div class="label">Find real problems</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot">5-8</div>
+        <div class="title">Build with AI</div>
+        <div class="label">Real products</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot">9-12</div>
+        <div class="title">Launch</div>
+        <div class="label">Demo Day</div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      NEXT_ | Building What's NEXT_ for Rwanda | Confidential
+    </div>
+  </div>
+  
+  <!-- Page 2 -->
+  <div class="page">
+    <div class="rwanda-accent"></div>
+    
+    <div class="header">
+      <div class="logo">NEXT<span>_</span></div>
+      <div class="badge">Pilot Proposal</div>
+    </div>
+    
+    <h2>90-Day Pilot Proposal</h2>
+    <p>Minimal investment. Maximum visibility. Measurable outcomes.</p>
+    
+    <div class="pilot-box">
+      <h3>Pilot Program Details</h3>
+      <div class="pilot-stats">
+        <div class="pilot-stat">
+          <div class="value">5</div>
+          <div class="desc">Schools (Kigali)</div>
+        </div>
+        <div class="pilot-stat">
+          <div class="value">1,000</div>
+          <div class="desc">Students</div>
+        </div>
+        <div class="pilot-stat">
+          <div class="value">$35K</div>
+          <div class="desc">Investment</div>
+        </div>
+        <div class="pilot-stat">
+          <div class="value">90</div>
+          <div class="desc">Days</div>
+        </div>
+      </div>
+      
+      <h4 style="font-size: 13px; margin-bottom: 10px;">What's Included:</h4>
+      <ul class="includes-list">
+        <li>Full Platform Access</li>
+        <li>12-Week AI Curriculum</li>
+        <li>Teacher Training (2hr)</li>
+        <li>AI Building Tools</li>
+        <li>Analytics Dashboard</li>
+        <li>Demo Day Showcase</li>
+      </ul>
+    </div>
+    
+    <h2>ROI Projections</h2>
+    <table class="roi-table">
+      <tr>
+        <th>Metric</th>
+        <th>Year 1</th>
+        <th>Year 3</th>
+        <th>Year 5</th>
+      </tr>
+      <tr>
+        <td>Students Trained</td>
+        <td>2,000</td>
+        <td>20,000</td>
+        <td>100,000</td>
+      </tr>
+      <tr>
+        <td>Businesses Launched</td>
+        <td>400</td>
+        <td>4,000</td>
+        <td>20,000</td>
+      </tr>
+      <tr>
+        <td>Jobs Created</td>
+        <td>800</td>
+        <td>12,000</td>
+        <td>80,000</td>
+      </tr>
+      <tr>
+        <td>Investment Required</td>
+        <td>$70K</td>
+        <td>$500K</td>
+        <td>$2M</td>
+      </tr>
+    </table>
+    <p style="font-size: 11px; color: #888;">*Based on 20% business launch rate and 4 jobs per successful business</p>
+    
+    <div class="partner-section">
+      <h3>Development Partner Funding Options</h3>
+      <p style="font-size: 13px; margin-bottom: 10px;">Zero-cost pilot possible through development partner co-investment:</p>
+      <div class="partner-list">
+        <span class="partner-tag">Mastercard Foundation</span>
+        <span class="partner-tag">USAID</span>
+        <span class="partner-tag">GIZ</span>
+        <span class="partner-tag">British Council</span>
+        <span class="partner-tag">World Bank</span>
+      </div>
+      <p style="font-size: 12px; margin-top: 10px; color: #20603D;">
+        <strong>Joint proposal available:</strong> Government provides coordination; partners fund implementation.
+      </p>
+    </div>
+    
+    <h2>Why NEXT_?</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0;">
+      <div style="text-align: center;">
+        <div style="font-size: 24px; font-weight: 800; color: #00A1DE;">2,050+</div>
+        <div style="font-size: 11px; color: #666;">Students Globally</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 24px; font-weight: 800; color: #FAD201;">195</div>
+        <div style="font-size: 11px; color: #666;">Countries</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 24px; font-weight: 800; color: #20603D;">AI-First</div>
+        <div style="font-size: 11px; color: #666;">Curriculum</div>
+      </div>
+    </div>
+    
+    <div class="contact-box">
+      <h3>Schedule a Confidential Ministry Briefing</h3>
+      <div class="email">government@nextbillionlab.com</div>
+      <div class="note">Direct conversation with NEXT_ leadership about Rwanda implementation</div>
+    </div>
+    
+    <div class="footer">
+      © 2025 NEXT_ | This document is confidential and prepared specifically for Rwanda Development Board<br>
+      Building What's NEXT_ | Africa's Singapore Deserves Africa's Founders
+    </div>
+  </div>
+</body>
+</html>

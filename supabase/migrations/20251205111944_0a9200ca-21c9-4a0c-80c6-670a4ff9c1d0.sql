@@ -1,0 +1,108 @@
+-- Insert missions for all 12 weeks (5 missions per week = 60 total)
+-- Focus on vibe coding in weeks 5-7
+
+-- Week 1: Problem Hunting
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 1, 1, 1, 1, 'What is a Problem?', 'Understanding problems worth solving', 'A great startup begins with a great problem. Not just any problem—one that makes people say "I NEED this fixed!" Today, you''ll learn to spot problems that are painful, frequent, and worth paying to solve.', 'List 10 problems you noticed this week. For each one, rate: How painful? (1-5) How often? (1-5) Would people pay? (Yes/No)', 25, 'problem_card'),
+('teen', 1, 2, 2, 1, 'Problem Hunting Safari', 'Finding problems in the wild', 'Great founders are problem detectives. They observe, ask questions, and dig deeper. Today, go on a "problem safari" in your school, home, or neighborhood.', 'Interview 3 people about their daily frustrations. Ask: What takes too long? What''s annoying? What do you wish existed?', 30, 'interview_notes'),
+('teen', 1, 3, 3, 1, 'The Problem Canvas', 'Documenting your findings', 'Now it''s time to organize what you found. A Problem Canvas helps you see the full picture: who has the problem, when they have it, and how bad it hurts.', 'Fill out a Problem Canvas for your top 3 problems. Include: Who, When, Where, How Bad, Current Solutions.', 25, 'problem_card'),
+('teen', 1, 4, 4, 1, 'Problem Prioritization', 'Choosing the right problem', 'Not all problems are created equal. Some are huge but hard to solve. Some are small but easy wins. Learn to prioritize using the Impact vs Effort matrix.', 'Create an Impact vs Effort chart for your problems. Pick your #1 problem and explain why.', 20, 'problem_card'),
+('teen', 1, 5, 5, 1, 'Problem Pitch', 'Telling the story of your problem', 'Can you make someone feel the pain of your problem in 30 seconds? Today, craft a compelling problem story that hooks investors and customers.', 'Write a 30-second problem pitch: "Have you ever [situation]? It''s frustrating because [pain]. Currently, people [bad solution]..."', 25, 'pitch_deck');
+
+-- Week 2: Customer Detective
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 2, 1, 6, 1, 'Who is Your Customer?', 'Creating customer personas', 'Your customer isn''t "everyone." The best startups know exactly who they''re building for. Today, create a detailed customer persona—a fictional person who represents your ideal customer.', 'Create 2 customer personas with: Name, Age, Job, Goals, Frustrations, Daily Routine, Tech they use.', 30, 'customer_persona'),
+('teen', 2, 2, 7, 1, 'Interview Like a Pro', 'Customer discovery techniques', 'Talking to customers is a superpower. But most people do it wrong—they ask leading questions or pitch instead of listening. Learn the art of customer interviews.', 'Write 10 open-ended questions for your customer interviews. Practice the "5 Whys" technique.', 25, 'interview_notes'),
+('teen', 2, 3, 8, 1, 'Go Talk to People', 'Conducting real interviews', 'Time to get out of the building! Today, you''ll conduct real customer interviews. Remember: you''re not selling, you''re learning.', 'Interview 5 potential customers. Record key quotes, surprises, and patterns you noticed.', 45, 'interview_notes'),
+('teen', 2, 4, 9, 1, 'Pattern Recognition', 'Analyzing interview data', 'Now comes the detective work. Look for patterns in what people said. What surprised you? What did multiple people mention?', 'Create an "Insights Wall" with post-its grouping similar feedback. What are the top 3 patterns?', 25, 'interview_notes'),
+('teen', 2, 5, 10, 1, 'Customer Journey Map', 'Visualizing the experience', 'A Customer Journey Map shows every step your customer takes when dealing with the problem. This reveals opportunities for your solution.', 'Map your customer''s journey: Trigger → Steps → Pain Points → Emotions → Opportunities.', 30, 'customer_persona');
+
+-- Week 3: Reality Check
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 3, 1, 11, 1, 'Competition Research', 'Know your competitors', 'If no one else is solving this problem, ask why. If others are, learn from them. Today, become an expert on your competitive landscape.', 'Find 5 competitors (direct or indirect). For each: What they do well, What they do badly, Their pricing.', 30, 'business_model'),
+('teen', 3, 2, 12, 1, 'What Makes You Different?', 'Finding your unique angle', 'You can''t just be "better"—you need to be different. Your unique value proposition (UVP) is why customers choose YOU over alternatives.', 'Write 5 different UVPs for your idea. Test them with 3 people—which one makes them most excited?', 25, 'value_proposition'),
+('teen', 3, 3, 13, 1, 'Market Size Matters', 'Is your market big enough?', 'Investors want to know: how big is the opportunity? Learn TAM, SAM, SOM—the three ways to size your market.', 'Calculate your TAM (total), SAM (serviceable), and SOM (realistic first year) market sizes.', 30, 'business_model'),
+('teen', 3, 4, 14, 1, 'Reality Check Survey', 'Validating with data', 'Interviews give depth, surveys give scale. Create a survey to validate your assumptions with more people.', 'Create a 10-question survey. Send it to at least 20 people. Analyze the results.', 35, 'interview_notes'),
+('teen', 3, 5, 15, 1, 'Pivot or Persevere?', 'Making the call', 'Based on everything you''ve learned, is your idea validated? Do you need to pivot (change direction) or persevere (keep going)?', 'Write a 1-page "Validation Report" summarizing your findings and your decision to pivot or persevere.', 25, 'reflection');
+
+-- Week 4: Solution Architect
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 4, 1, 16, 1, 'Brainstorm Solutions', 'Generate 100 ideas', 'Now that you know the problem deeply, it''s time to explore solutions. Quantity leads to quality—aim for wild ideas!', 'Use the "Crazy 8s" technique: sketch 8 different solution ideas in 8 minutes. Then pick top 3 to develop.', 25, 'solution_sketch'),
+('teen', 4, 2, 17, 1, 'Solution Mapping', 'How will it work?', 'Take your best idea and map out how it actually works. What are the key features? What''s the user flow?', 'Create a simple flowchart showing: User Goal → Steps → Features needed → End result.', 30, 'wireframe'),
+('teen', 4, 3, 18, 1, 'Paper Prototyping', 'Sketch before you build', 'Before building anything digital, sketch it on paper. This is the fastest way to test ideas and get feedback.', 'Draw 5 screens of your app/website on paper. Show them to 3 people—what confuses them?', 30, 'wireframe'),
+('teen', 4, 4, 19, 1, 'Feature Prioritization', 'MVP vs Nice-to-Have', 'You can''t build everything at once. Learn to separate must-have features (MVP) from nice-to-have features (later).', 'List all features. Categorize each as: Must Have, Should Have, Could Have, Won''t Have (MoSCoW method).', 25, 'prd_document'),
+('teen', 4, 5, 20, 1, 'Solution Pitch', 'Explaining your solution', 'Can you explain your solution in one sentence? Craft a clear, compelling solution statement.', 'Write your solution statement: "We help [customer] to [benefit] by [how it works], unlike [competitors]."', 20, 'value_proposition');
+
+-- Week 5: MVP Builder (VIBE CODING FOCUS)
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 5, 1, 21, 2, 'What is Vibe Coding?', 'Build apps with AI as your partner', 'Welcome to the future of building! Vibe coding means using AI tools to create real apps by describing what you want in plain English. No coding experience needed—just clear thinking and good prompts.', 'Watch 3 demos of apps built with AI tools (Lovable, Bolt, Replit). Write down: What surprised you? What seems possible now?', 30, 'reflection'),
+('teen', 5, 2, 22, 2, 'Your First AI App', 'From idea to working prototype', 'Time to build! Today you''ll create your first working app using an AI builder. Start simple—a landing page or a basic tool.', 'Open an AI builder (like Lovable). Describe your MVP in detail. Get a working prototype in 30 minutes!', 45, 'mvp_prototype'),
+('teen', 5, 3, 23, 2, 'Prompt Engineering 101', 'Speaking AI''s language', 'Good prompts = good results. Learn the art of writing clear, specific prompts that get AI to build exactly what you want.', 'Practice prompt engineering: Write 3 versions of the same feature request. Test each one. Which works best?', 30, 'prototype'),
+('teen', 5, 4, 24, 2, 'Debug Like a Founder', 'When things go wrong', 'Even with AI, things break. Today, learn how to debug: identify the problem, describe it clearly to AI, and iterate to fix it.', 'Intentionally break something in your app. Then use AI to fix it. Document the debugging conversation.', 35, 'prototype'),
+('teen', 5, 5, 25, 2, 'MVP Polish', 'Making it feel real', 'Your MVP should feel real even if it''s simple. Today, polish your prototype: better design, clearer copy, smoother flow.', 'Improve your MVP with 5 polish requests to AI. Get feedback from 3 people. Make it demo-ready!', 40, 'mvp_prototype');
+
+-- Week 6: Launch Pad (VIBE CODING FOCUS)
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 6, 1, 26, 2, 'Landing Page Psychology', 'Design that converts', 'Your landing page has 3 seconds to hook visitors. Learn the psychology of great landing pages: headlines, hero sections, and calls to action.', 'Analyze 5 startup landing pages. What grabs attention? What makes you want to sign up?', 25, 'reflection'),
+('teen', 6, 2, 27, 2, 'Build Your Landing Page', 'AI-powered page creation', 'Using what you learned, create a stunning landing page for your startup using AI. Focus on: clear headline, benefits, social proof, CTA.', 'Use AI to generate your landing page. Iterate at least 3 times to perfect the message and design.', 45, 'landing_page'),
+('teen', 6, 3, 28, 2, 'Forms & Data Collection', 'Capture leads like a pro', 'A landing page without a way to collect emails is just a pretty poster. Today, add forms, waitlists, and data collection.', 'Add a signup form to your landing page. Set up email collection. Get 5 real signups!', 35, 'landing_page'),
+('teen', 6, 4, 29, 2, 'Connect the Pieces', 'From landing page to app', 'Your landing page should lead somewhere! Connect your landing page to your MVP prototype for a complete user journey.', 'Link your landing page to your app. Create a seamless flow from "Learn More" to "Try It".', 30, 'app_link'),
+('teen', 6, 5, 30, 2, 'Launch Checklist', 'Pre-launch preparation', 'Before going live, run through a launch checklist. Today, prepare everything you need for launch day.', 'Complete the launch checklist: Domain? Analytics? Social links? Mobile-friendly? Fast loading?', 30, 'reflection');
+
+-- Week 7: Vibe Coder Pro (ADVANCED VIBE CODING)
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 7, 1, 31, 2, 'Advanced Prompting', 'Level up your AI skills', 'Basic prompts get basic results. Advanced prompts get professional results. Today, master techniques like context setting, examples, and iterative refinement.', 'Rewrite your app prompts using advanced techniques. Compare results. Document what works best.', 35, 'prototype'),
+('teen', 7, 2, 32, 2, 'Adding Real Features', 'Authentication & databases', 'Real apps need user accounts and data storage. Learn how to prompt AI to add authentication, databases, and user management.', 'Add user signup/login to your app using AI prompts. Store user data. Test with 3 accounts.', 45, 'mvp_prototype'),
+('teen', 7, 3, 33, 2, 'API Integrations', 'Connect to the world', 'APIs let your app talk to other services: payments, maps, AI, social media. Today, add an integration to make your app more powerful.', 'Add one API integration to your app (OpenAI, Stripe, Google Maps, etc.). Make it work end-to-end.', 45, 'mvp_prototype'),
+('teen', 7, 4, 34, 2, 'Mobile-First Design', 'Building for phones', 'Most users are on mobile. Today, ensure your app looks and works great on phones, tablets, and desktops.', 'Test your app on 3 different screen sizes. Fix any issues. Make it truly responsive.', 35, 'prototype'),
+('teen', 7, 5, 35, 2, 'Deploy to the World', 'Going live for real', 'Your app is ready to meet the world! Today, deploy your app to a real URL that anyone can access.', 'Deploy your app. Share the link with 10 people. Collect their feedback.', 40, 'app_link');
+
+-- Week 8: Test Lab
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 8, 1, 36, 2, 'User Testing 101', 'Watch people use your product', 'The best feedback comes from watching real people use your product. Today, learn how to run effective user tests.', 'Run 3 user tests: give tasks, observe silently, note where they struggle. No helping allowed!', 40, 'user_feedback'),
+('teen', 8, 2, 37, 2, 'Feedback Analysis', 'Making sense of user input', 'Feedback is gold, but raw feedback is messy. Learn to categorize, prioritize, and act on what users tell you.', 'Organize all feedback into: Critical Bugs, UX Issues, Feature Requests, Positive Comments.', 30, 'user_feedback'),
+('teen', 8, 3, 38, 2, 'Rapid Iteration', 'Fix, test, repeat', 'Great products come from rapid cycles of building and testing. Today, fix your top issues and test again.', 'Fix your top 3 issues. Run another test. Did it improve? Document the changes.', 40, 'prototype'),
+('teen', 8, 4, 39, 2, 'Metrics That Matter', 'What to measure', 'You can''t improve what you don''t measure. Learn which metrics matter for your startup: usage, retention, conversion.', 'Set up basic analytics on your app. Define your 3 key metrics. Start tracking.', 30, 'business_model'),
+('teen', 8, 5, 40, 2, 'A/B Testing', 'Let data decide', 'Sometimes you have two ideas and don''t know which is better. A/B testing lets your users decide with data.', 'Create two versions of one element (headline, button, image). Test with users. Which wins?', 35, 'user_feedback');
+
+-- Week 9: Growth Hacker
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 9, 1, 41, 3, 'Growth Mindset', 'Think like a growth hacker', 'Growth hackers find creative ways to grow fast with limited resources. Today, learn the mindset and tactics of viral growth.', 'Study 3 viral growth stories (Dropbox, Hotmail, TikTok). What was their "aha" growth hack?', 25, 'reflection'),
+('teen', 9, 2, 42, 3, 'Your First 10 Users', 'Quality over quantity', 'Forget about millions of users. Can you get 10 people who LOVE your product? Today, focus on finding your first true fans.', 'Personally reach out to potential users. Get 10 real signups. Make 5 of them active users.', 40, 'customer_email'),
+('teen', 9, 3, 43, 3, 'Social Media Strategy', 'Building buzz online', 'Social media can be your biggest growth channel. But posting randomly doesn''t work. You need a strategy.', 'Create a 2-week content calendar for your startup. Post 5 times. Track engagement.', 35, 'marketing_plan'),
+('teen', 9, 4, 44, 3, 'Referral Magic', 'Turn users into promoters', 'The best marketing is word of mouth. How can you make your product so good that users tell their friends?', 'Design a referral program. Add a "Share with friends" feature. Get 3 referred signups.', 35, 'prototype'),
+('teen', 9, 5, 45, 3, 'Growth Experiments', 'Test fast, learn faster', 'Growth is about experimentation. Today, design and run 3 mini growth experiments.', 'Run 3 experiments (different channels, messages, or offers). Document results. What worked?', 40, 'marketing_plan');
+
+-- Week 10: Launch Day
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 10, 1, 46, 3, 'Launch Strategy', 'Planning your big day', 'A good launch can 10x your results. Today, plan your launch strategy: where, when, and how to announce.', 'Create a launch plan: 3 channels to launch on, timeline, assets needed, metrics to track.', 30, 'marketing_plan'),
+('teen', 10, 2, 47, 3, 'Launch Assets', 'Creating buzz materials', 'You need assets to launch: demo video, screenshots, press kit, social posts. Today, create them all.', 'Create: 1 demo video (60s), 5 screenshots, 3 social posts, 1 launch email.', 45, 'pitch_video'),
+('teen', 10, 3, 48, 3, 'Soft Launch', 'Test with a small audience', 'Before the big launch, do a soft launch to catch any issues. Share with a small, friendly audience first.', 'Share with 20 people you know. Collect feedback. Fix any critical issues.', 35, 'user_feedback'),
+('teen', 10, 4, 49, 3, 'Launch Day!', 'Ship it to the world', 'This is it! Today you launch your startup to the world. Post everywhere, engage with everyone, and celebrate!', 'Execute your launch plan. Post on all channels. Respond to every comment. Track metrics.', 45, 'app_link'),
+('teen', 10, 5, 50, 3, 'Post-Launch Analysis', 'What worked?', 'The launch is just the beginning. Today, analyze what worked, what didn''t, and plan your next moves.', 'Write a launch retrospective: metrics achieved, best channel, surprises, next 3 priorities.', 30, 'reflection');
+
+-- Week 11: Pitch Perfect
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 11, 1, 51, 3, 'Pitch Deck Basics', 'Anatomy of a winning deck', 'A pitch deck tells your startup''s story in slides. Today, learn the 10 essential slides every investor expects.', 'Study 5 famous pitch decks (Airbnb, Buffer, etc.). Note what makes each slide effective.', 30, 'reflection'),
+('teen', 11, 2, 52, 3, 'Build Your Deck', 'Creating your pitch deck', 'Time to build your own pitch deck! Focus on clarity, visuals, and story flow.', 'Create a 10-slide pitch deck using AI. Get feedback from 2 people. Iterate.', 45, 'pitch_deck'),
+('teen', 11, 3, 53, 3, 'The Story Arc', 'From problem to ask', 'Great pitches follow a story arc: hook, problem, solution, traction, team, ask. Today, perfect your narrative.', 'Rewrite your pitch as a story. Practice telling it without slides. Time yourself (3 min max).', 30, 'pitch_deck'),
+('teen', 11, 4, 54, 3, 'Handling Questions', 'Investor Q&A prep', 'Investors will ask tough questions. Today, prepare for the hardest questions about your startup.', 'Write answers to 10 common investor questions. Practice with a friend playing "tough investor".', 35, 'reflection'),
+('teen', 11, 5, 55, 3, 'Practice Pitch', 'Rehearse to perfection', 'Practice makes perfect. Today, rehearse your full pitch multiple times until it feels natural.', 'Record yourself pitching 3 times. Watch each one. Improve. Final version should be smooth.', 40, 'pitch_video');
+
+-- Week 12: Demo Day
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type) VALUES
+('teen', 12, 1, 56, 3, 'Final Polish', 'Demo day preparation', 'Demo day is your moment to shine. Today, polish everything: your app, your deck, your appearance.', 'Final checks: App works? Deck perfect? Outfit ready? Practice space booked? Backup plan?', 30, 'reflection'),
+('teen', 12, 2, 57, 3, 'Demo Day Dress Rehearsal', 'Full run-through', 'Do a complete dress rehearsal. Present to friends or family as if it were the real thing.', 'Do a full 5-minute presentation including live demo. Get detailed feedback. Make final tweaks.', 40, 'pitch_video'),
+('teen', 12, 3, 58, 3, 'Demo Day!', 'Present to the panel', 'This is your moment! Present your startup with confidence. Show what you''ve built and learned.', 'Deliver your pitch. Do your live demo. Answer questions. Give it your all!', 30, 'pitch_deck'),
+('teen', 12, 4, 59, 3, 'Feedback & Reflection', 'Learning from the experience', 'Whether you won or not, today is about learning. Reflect on the entire journey and the feedback you received.', 'Write a reflection: What are you most proud of? What would you do differently? What''s next?', 25, 'reflection'),
+('teen', 12, 5, 60, 3, 'What''s Next?', 'Your founder journey continues', 'Demo day isn''t the end—it''s just the beginning. Today, plan your next steps as a young founder.', 'Create a "Next 90 Days" plan: Continue this startup? Start something new? What skills to build?', 30, 'business_model');
+
+-- Copy missions for junior track
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type)
+SELECT 'junior', week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type
+FROM missions WHERE track = 'teen';
+
+-- Copy missions for advanced track
+INSERT INTO missions (track, week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type)
+SELECT 'advanced', week, day, day_number, phase, title, subtitle, micro_content, lab_prompt, estimated_minutes, artifact_type
+FROM missions WHERE track = 'teen';

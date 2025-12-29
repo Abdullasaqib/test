@@ -1,0 +1,325 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Deep Navy Dark Theme - Premium Tech Aesthetic */
+    --background: 222 47% 5%;          /* #0A0F1C - Deep navy */
+    --foreground: 0 0% 98%;            /* Pure white */
+
+    --card: 222 47% 8%;                /* #111827 - Slightly lighter navy */
+    --card-foreground: 0 0% 98%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Electric Blue Primary */
+    --primary: 217 91% 60%;            /* #3B82F6 - Vibrant electric blue */
+    --primary-dark: 217 85% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Warm Gold for CTAs */
+    --gold: 38 92% 50%;                /* #F59E0B - Amber gold */
+    --gold-dark: 35 85% 42%;
+    --gold-foreground: 222 47% 11%;
+
+    /* Secondary */
+    --secondary: 222 30% 12%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 222 30% 15%;
+    --muted-foreground: 220 14% 65%;
+
+    --accent: 38 92% 50%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 217 91% 60%;
+
+    --radius: 0.75rem;
+
+    /* Accent Colors */
+    --pillar-green: 142 76% 45%;
+    --pillar-blue: 217 91% 60%;
+    --pillar-purple: 262 83% 58%;
+    --pillar-amber: 38 92% 50%;
+    --pillar-rose: 350 89% 60%;
+    --pillar-cyan: 189 94% 50%;
+
+    /* Neural/Cyber colors for tailwind config */
+    --neural-purple: 262 83% 58%;
+    --cyber-cyan: 189 94% 50%;
+    --matrix-green: 142 76% 45%;
+    --plasma-pink: 350 89% 60%;
+
+    /* Premium Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 85%, 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(222, 47%, 5%) 0%, hsl(222, 30%, 12%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(38, 92%, 50%), hsl(35, 85%, 42%));
+    --gradient-blue: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 85%, 50%));
+    --gradient-neural: linear-gradient(135deg, hsl(262, 83%, 58%), hsl(217, 91%, 60%));
+    --gradient-holographic: linear-gradient(135deg, hsl(217, 91%, 70%), hsl(262, 83%, 68%), hsl(38, 92%, 60%));
+
+    /* Glow Effects */
+    --glow-blue: 0 0 60px hsl(217, 91%, 60%, 0.3);
+    --glow-gold: 0 0 40px hsl(38, 92%, 50%, 0.3);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(217 91% 60% / 0.2);
+
+    --sidebar-background: 222 47% 6%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 30% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 222 30% 18%;
+    --sidebar-ring: 217 91% 60%;
+  }
+
+  .dark {
+    /* Dark Mode inherits same values for consistency */
+    --background: 222 47% 5%;
+    --foreground: 0 0% 98%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 217 91% 65%;
+    --primary-dark: 217 85% 55%;
+    --primary-foreground: 0 0% 100%;
+    
+    --gold: 38 92% 55%;
+    --gold-dark: 35 85% 45%;
+    --gold-foreground: 222 47% 11%;
+
+    --secondary: 222 25% 18%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 222 30% 18%;
+    --muted-foreground: 220 14% 65%;
+
+    --accent: 38 92% 55%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 222 30% 22%;
+    --input: 222 30% 22%;
+    --ring: 217 91% 65%;
+
+    --pillar-green: 142 76% 45%;
+    --pillar-blue: 217 91% 65%;
+    --pillar-purple: 262 83% 58%;
+    --pillar-amber: 38 92% 55%;
+    --pillar-rose: 350 89% 60%;
+    --pillar-cyan: 189 94% 50%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(222, 47%, 5%) 0%, hsl(222, 30%, 12%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(38, 92%, 55%), hsl(35, 85%, 45%));
+
+    --shadow-soft: 0 4px 20px -4px hsl(217 91% 65% / 0.2);
+
+    --sidebar-background: 222 40% 6%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 217 91% 65%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 30% 18%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 222 30% 22%;
+    --sidebar-ring: 217 91% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Premium headline tracking */
+  h1, h2, h3 {
+    letter-spacing: -0.025em;
+  }
+
+  h4, h5, h6 {
+    letter-spacing: -0.01em;
+  }
+
+  /* Premium typography scale */
+  .hero-headline {
+    @apply text-7xl md:text-8xl lg:text-9xl font-bold leading-[0.9] tracking-tight;
+  }
+
+  .section-headline {
+    @apply text-2xl md:text-3xl font-bold uppercase tracking-wider;
+  }
+
+  .body-large {
+    @apply text-xl md:text-2xl leading-relaxed;
+  }
+
+  /* Premium section spacing */
+  .section-padding {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  /* Alternating section backgrounds */
+  .section-alternate {
+    @apply bg-secondary/50;
+  }
+
+  /* Premium quote card styling */
+  .leadership-quote {
+    @apply relative bg-card border border-border rounded-2xl p-12 md:p-16 shadow-2xl;
+  }
+
+  .leadership-quote::before {
+    content: '"';
+    @apply absolute -top-8 left-8 text-9xl text-primary/10 font-serif;
+  }
+
+  /* Electric glow effect */
+  .glow-blue {
+    box-shadow: var(--glow-blue);
+  }
+
+  /* Gold button glow */
+  .glow-gold {
+    box-shadow: var(--glow-gold);
+  }
+
+  /* Glass card effect */
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+
+  /* Gradient text */
+  .gradient-text-hero {
+    background: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(217, 91%, 70%) 50%, hsl(38, 92%, 60%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Neural Effects */
+  .neural-glow {
+    filter: drop-shadow(var(--glow-gold));
+  }
+
+  .holographic-text {
+    background: linear-gradient(135deg, hsl(217, 91%, 70%), hsl(262, 83%, 68%), hsl(38, 92%, 60%));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .neural-border {
+    position: relative;
+  }
+
+  .neural-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(262, 83%, 58%), hsl(38, 92%, 50%));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .neural-border:hover::before {
+    opacity: 1;
+  }
+}
+
+@layer utilities {
+  /* Smooth scroll behavior */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+  
+  /* Premium hover lift effect */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  /* Gold text utility */
+  .text-gold {
+    color: hsl(38, 92%, 50%);
+  }
+
+  /* Soft shadow utility */
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Glass effect utilities */
+  .glass-sm {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10;
+  }
+
+  .glass-md {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+
+  .glass-lg {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20;
+  }
+
+  /* Underscore Brand - Cursor Animations */
+  @keyframes cursor-blink {
+    0%, 45% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  .cursor-blink {
+    animation: cursor-blink 1.2s step-end infinite;
+    display: inline-block;
+  }
+
+  @keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  .typewriter-text {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: none;
+  }
+}

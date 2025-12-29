@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base44 × Learn with Leaders - Strategic Partnership Proposal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom Design System Colors */
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 220 60% 10%;
+      --card: 0 0% 98%;
+      --card-foreground: 220 60% 10%;
+      --primary: 220 80% 45%;
+      --primary-foreground: 0 0% 100%;
+      --gold: 45 95% 55%;
+      --gold-foreground: 220 60% 10%;
+      --secondary: 220 70% 92%;
+      --secondary-foreground: 220 80% 45%;
+      --muted: 220 30% 96%;
+      --muted-foreground: 220 20% 45%;
+      --accent: 45 95% 55%;
+      --accent-foreground: 220 60% 10%;
+      --border: 220 30% 88%;
+      --pillar-green: 142 76% 36%;
+      --pillar-blue: 217 91% 60%;
+      --pillar-purple: 262 83% 58%;
+      --pillar-amber: 38 92% 50%;
+      --pillar-rose: 350 89% 60%;
+      --pillar-cyan: 189 94% 43%;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      line-height: 1.6;
+    }
+    
+    .text-gradient-primary {
+      background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-pulse {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.8;
+      }
+    }
+    
+    /* Print Styles */
+    @media print {
+      @page {
+        size: A4;
+        margin: 1.5cm 2cm;
+      }
+      
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      
+      body {
+        font-size: 11pt;
+        background: white !important;
+      }
+      
+      .print-hidden {
+        display: none !important;
+      }
+      
+      .page-break {
+        page-break-before: always;
+      }
+      
+      section {
+        page-break-inside: avoid;
+        margin-bottom: 2rem;
+      }
+      
+      h1, h2, h3 {
+        page-break-after: avoid;
+      }
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            border: 'hsl(var(--border))',
+            background: 'hsl(var(--background))',
+            foreground: 'hsl(var(--foreground))',
+            primary: {
+              DEFAULT: 'hsl(var(--primary))',
+              foreground: 'hsl(var(--primary-foreground))'
+            },
+            gold: {
+              DEFAULT: 'hsl(var(--gold))',
+              foreground: 'hsl(var(--gold-foreground))'
+            },
+            muted: {
+              DEFAULT: 'hsl(var(--muted))',
+              foreground: 'hsl(var(--muted-foreground))'
+            },
+            accent: {
+              DEFAULT: 'hsl(var(--accent))',
+              foreground: 'hsl(var(--accent-foreground))'
+            },
+            'pillar-green': 'hsl(var(--pillar-green))',
+            'pillar-blue': 'hsl(var(--pillar-blue))',
+            'pillar-purple': 'hsl(var(--pillar-purple))',
+            'pillar-amber': 'hsl(var(--pillar-amber))',
+            'pillar-rose': 'hsl(var(--pillar-rose))',
+            'pillar-cyan': 'hsl(var(--pillar-cyan))',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen">
+  <!-- Print Button -->
+  <button onclick="window.print()" class="print-hidden fixed bottom-8 right-8 z-50 px-6 py-3 bg-white rounded-lg border-2 border-gray-300 shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center gap-2">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+    </svg>
+    <span class="font-medium">Print / Save as PDF</span>
+  </button>
+
+  <!-- Hero Section - Cinematic Overlay (Variation 3) -->
+  <section class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
+    <!-- Dark dramatic background with animated elements -->
+    <div class="absolute inset-0 bg-gradient-to-br from-background via-primary/20 to-background">
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent"></div>
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-[100px] animate-pulse"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[100px] animate-pulse" style="animation-delay: 1.5s"></div>
+    </div>
+    
+    <!-- Particle effect overlay -->
+    <div class="absolute inset-0 opacity-20">
+      <div class="absolute top-20 left-20 w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+      <div class="absolute top-40 right-32 w-1 h-1 bg-primary rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+      <div class="absolute bottom-32 left-40 w-2 h-2 bg-primary rounded-full animate-pulse" style="animation-delay: 1s"></div>
+      <div class="absolute bottom-20 right-20 w-1 h-1 bg-primary rounded-full animate-pulse" style="animation-delay: 1.5s"></div>
+    </div>
+    
+    <div class="container mx-auto max-w-6xl relative z-10 text-center space-y-12">
+      <!-- Glowing badge -->
+      <div class="flex items-center justify-center gap-3">
+        <svg class="w-5 h-5 text-primary animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+        </svg>
+        <div class="inline-flex rounded-full border border-primary/30 px-8 py-3 text-base font-semibold bg-primary text-white shadow-lg" style="box-shadow: 0 0 20px hsl(var(--primary) / 0.2)">
+          Strategic Partnership Proposal
+        </div>
+        <svg class="w-5 h-5 text-primary animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+        </svg>
+      </div>
+      
+      <!-- Logos with glow -->
+      <div class="flex items-center justify-center gap-12 my-12">
+        <div class="p-6 bg-white/80 backdrop-blur-md border border-primary/20 rounded-2xl shadow-2xl" style="box-shadow: 0 0 30px hsl(var(--primary) / 0.1)">
+          <div class="h-14 flex items-center">
+            <span class="text-3xl font-bold text-primary">Base44</span>
+          </div>
+        </div>
+        
+        <div class="relative">
+          <div class="absolute inset-0 bg-primary/20 blur-xl rounded-full"></div>
+          <div class="relative text-4xl font-bold text-primary">×</div>
+        </div>
+        
+        <div class="p-6 bg-white/80 backdrop-blur-md border border-primary/20 rounded-2xl shadow-2xl" style="box-shadow: 0 0 30px hsl(var(--primary) / 0.1)">
+          <div class="h-14 flex items-center">
+            <span class="text-3xl font-bold text-accent">Learn with Leaders</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Dramatic headline -->
+      <div class="space-y-6">
+        <h1 class="text-7xl md:text-8xl font-bold tracking-tight leading-tight">
+          Building the Future of
+          <br>
+          <span class="relative inline-block">
+            <span class="absolute inset-0 blur-2xl opacity-30" style="background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))"></span>
+            <span class="relative text-gradient-primary" style="color: hsl(var(--foreground))">
+              AI Education
+            </span>
+          </span>
+        </h1>
+        
+        <p class="max-w-3xl mx-auto leading-relaxed text-3xl" style="color: hsl(var(--foreground)); font-weight: 400">
+          Six strategic pillars to empower 10,000 students and certify 1 million learners globally
+        </p>
+      </div>
+      
+      <!-- Stats with glow -->
+      <div class="flex flex-wrap gap-8 justify-center pt-12">
+        <div class="relative group">
+          <div class="absolute inset-0 bg-primary/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative text-center">
+            <div class="text-4xl font-bold text-primary">10K</div>
+            <div class="text-sm text-muted-foreground tracking-wide">Students</div>
+          </div>
+        </div>
+        <div class="relative group">
+          <div class="absolute inset-0 bg-primary/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative text-center">
+            <div class="text-4xl font-bold text-primary">1M</div>
+            <div class="text-sm text-muted-foreground tracking-wide">Certifications</div>
+          </div>
+        </div>
+        <div class="relative group">
+          <div class="absolute inset-0 bg-primary/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative text-center">
+            <div class="text-4xl font-bold text-primary">100%</div>
+            <div class="text-sm text-muted-foreground tracking-wide">Exclusive</div>
+          </div>
+        </div>
+        <div class="relative group">
+          <div class="absolute inset-0 bg-primary/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative text-center">
+            <div class="text-4xl font-bold text-primary">Dubai</div>
+            <div class="text-sm text-muted-foreground tracking-wide">Global HQ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Executive Summary -->
+  <section class="py-10 px-4 bg-gradient-to-b from-primary/5 to-background animate-fade-in">
+    <div class="container mx-auto max-w-5xl">
+      <div class="text-center mb-8">
+        <div class="inline-block rounded-full border px-4 py-2 text-base font-semibold bg-primary text-white mb-4">
+          Executive Summary
+        </div>
+        <h2 class="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          Partnership in 60 Seconds
+        </h2>
+      </div>
+      
+      <!-- The Opportunity -->
+      <div class="p-6 mb-6 border-2 border-primary/20 bg-gradient-to-br from-background to-primary/5 rounded-lg">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="rounded-full border px-3 py-1 text-base font-semibold bg-primary text-white">
+            The Opportunity
+          </div>
+          <span class="text-sm text-muted-foreground">Market Context & Strategic Timing</span>
+        </div>
+        
+        <div class="space-y-4">
+          <div>
+            <h4 class="font-bold text-xl mb-3">The Market Reality</h4>
+            <p class="text-base text-muted-foreground leading-relaxed">
+              AI coding education is exploding globally, but K-12 accessibility remains fragmented. Asia represents untapped markets with massive youth populations, government digital transformation mandates, and zero dominant platforms.
+            </p>
+          </div>
+          
+          <div>
+            <h4 class="font-bold text-xl mb-3">Why This Moment</h4>
+            <p class="text-base text-muted-foreground leading-relaxed">
+              Schools need AI literacy <span class="font-semibold text-foreground">now</span>. Governments are funding digital education initiatives. 
+              The winner in K-12 AI coding will be determined in the next 18 months—before big tech saturates the space.
+            </p>
+          </div>
+          
+          <div>
+            <h4 class="font-bold text-xl mb-3">Why Base44 × Learn with Leaders</h4>
+            <p class="text-base text-muted-foreground leading-relaxed">
+              <span class="font-semibold text-foreground">Base44</span> brings battle-tested AI coding infrastructure and technical expertise. 
+              <span class="font-semibold text-foreground ml-1">Learn with Leaders</span> brings established school networks, government relationships, 
+              and on-ground credibility across target markets. Together, we can own the category before it becomes competitive.
+            </p>
+          </div>
+          
+          <div class="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-6 rounded-xl border border-primary/30 mt-6">
+            <p class="font-bold text-lg mb-2">The Window</p>
+            <p class="text-muted-foreground">
+              First mover advantage in regional K-12 AI education. Six concrete pillars. Immediate execution. 
+              Scale to 1M certifications while competitors are still pitching.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- What We're Building -->
+        <div class="p-6 border-2 border-primary/20 rounded-lg hover:border-primary transition-all">
+          <h3 class="text-2xl font-bold mb-4">What We're Building</h3>
+          <p class="text-muted-foreground mb-4 leading-relaxed">
+            A partnership to make Base44 the AI coding platform for K-12 education across MENA and Africa.
+          </p>
+          <div class="space-y-3">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-pillar-green mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span class="text-base">10K students start immediately</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-pillar-blue mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span class="text-base">Scale to 1M certified students</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-pillar-purple mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span class="text-base">Exclusive school partnership</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-pillar-cyan mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span class="text-base">Dubai regional headquarters</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Why Now -->
+        <div class="p-6 border-2 border-accent/20 rounded-lg hover:border-accent transition-all">
+          <h3 class="text-2xl font-bold mb-4">Why Now</h3>
+          <p class="text-muted-foreground mb-4 leading-relaxed">
+            LWL has school networks and government access. Base44 has the platform and AI expertise. Together, we own the market.
+          </p>
+          <div class="bg-gradient-to-br from-accent/10 to-primary/10 p-6 rounded-xl border border-accent/20">
+            <p class="font-bold mb-4 text-lg">The Timeline</p>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-pillar-green"></div>
+                <span><strong>Month 1:</strong> Launch with 10K students</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-pillar-blue"></div>
+                <span><strong>Month 2-3:</strong> Co-branded programs live</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-pillar-amber"></div>
+                <span><strong>Month 4-6:</strong> Olympiad competition</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-pillar-rose"></div>
+                <span><strong>Year 1:</strong> Scale to 100K+ students</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Six Partnership Pillars -->
+  <section class="py-10 px-4 bg-muted/30 animate-fade-in page-break">
+    <div class="container mx-auto max-w-6xl">
+      <div class="text-center mb-10">
+        <div class="inline-block rounded-full border px-4 py-2 text-base font-semibold bg-primary text-white mb-4">
+          Partnership Structure
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Six Pillars</h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          Each pillar stands alone but compounds together
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Pillar 1: 10K Student Credits -->
+        <div class="p-8 border-2 border-pillar-green/30 rounded-lg bg-gradient-to-br from-background to-pillar-green/5">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="text-6xl font-bold text-pillar-green">1</div>
+            <div class="rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-pillar-green text-white">Pillar #1</div>
+          </div>
+          <div class="flex items-center gap-4 mb-4">
+            <svg class="w-12 h-12 text-pillar-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+            </svg>
+            <div>
+              <div class="text-4xl font-bold text-pillar-green mb-1">10,000</div>
+              <h3 class="text-xl font-semibold">Student Credits</h3>
+            </div>
+          </div>
+          <p class="text-muted-foreground mb-6 leading-relaxed">
+            Start immediately with 10,000 student credits from Base44
+          </p>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-green font-bold text-lg">•</span>
+              <span>Available day one</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-green font-bold text-lg">•</span>
+              <span>Validate market fit before scale</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-green font-bold text-lg">•</span>
+              <span>Zero upfront investment</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pillar 2: Prompter Certification -->
+        <div class="p-8 border-2 border-pillar-blue/30 rounded-lg bg-gradient-to-br from-background to-pillar-blue/5">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="text-6xl font-bold text-pillar-blue">2</div>
+            <div class="rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-pillar-blue text-white">Pillar #2</div>
+          </div>
+          <div class="flex items-center gap-4 mb-4">
+            <svg class="w-12 h-12 text-pillar-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+            </svg>
+            <div>
+              <div class="text-4xl font-bold text-pillar-blue mb-1">1 Million</div>
+              <h3 class="text-xl font-semibold">Certified Students</h3>
+            </div>
+          </div>
+          <p class="text-muted-foreground mb-6 leading-relaxed">
+            Each certified student gets 250 Base44 credits
+          </p>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-blue font-bold text-lg">•</span>
+              <span>250 credits per certification</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-blue font-bold text-lg">•</span>
+              <span>Direct path to platform usage</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-blue font-bold text-lg">•</span>
+              <span>Built-in subscription funnel</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pillar 3: Exclusive Licensing -->
+        <div class="p-8 border-2 border-pillar-purple/30 rounded-lg bg-gradient-to-br from-background to-pillar-purple/5">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="text-6xl font-bold text-pillar-purple">3</div>
+            <div class="rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-pillar-purple text-white">Pillar #3</div>
+          </div>
+          <div class="flex items-center gap-4 mb-4">
+            <svg class="w-12 h-12 text-pillar-purple flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            <div>
+              <div class="text-4xl font-bold text-pillar-purple mb-1">Exclusive</div>
+              <h3 class="text-xl font-semibold">K-12 Partner</h3>
+            </div>
+          </div>
+          <p class="text-muted-foreground mb-6 leading-relaxed">
+            LWL exclusive partner for MENA/Africa schools
+          </p>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-purple font-bold text-lg">•</span>
+              <span>Base44 won't go direct to schools</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-purple font-bold text-lg">•</span>
+              <span>LWL owns school relationships</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-purple font-bold text-lg">•</span>
+              <span>Clear territory protection</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pillar 4: VibeCode Program -->
+        <div class="p-8 border-2 border-pillar-amber/30 rounded-lg bg-gradient-to-br from-background to-pillar-amber/5">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="text-6xl font-bold text-pillar-amber">4</div>
+            <div class="rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-pillar-amber text-white">Pillar #4</div>
+          </div>
+          <div class="flex items-center gap-4 mb-4">
+            <svg class="w-12 h-12 text-pillar-amber flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            <div>
+              <div class="text-4xl font-bold text-pillar-amber mb-1">3 Weeks</div>
+              <h3 class="text-xl font-semibold">Co-Created Learning</h3>
+            </div>
+          </div>
+          <p class="text-muted-foreground mb-6 leading-relaxed">
+            Intensive online AI-powered coding program co-built with Base44
+          </p>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-amber font-bold text-lg">•</span>
+              <span>3-week intensive format</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-amber font-bold text-lg">•</span>
+              <span>Base44 educators co-teach</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-amber font-bold text-lg">•</span>
+              <span>Co-branded certification</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pillar 5: Entrepreneurship Olympiad -->
+        <div class="p-8 border-2 border-pillar-rose/30 rounded-lg bg-gradient-to-br from-background to-pillar-rose/5">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="text-6xl font-bold text-pillar-rose">5</div>
+            <div class="rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-pillar-rose text-white">Pillar #5</div>
+          </div>
+          <div class="flex items-center gap-4 mb-4">
+            <svg class="w-12 h-12 text-pillar-rose flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <div>
+              <div class="text-4xl font-bold text-pillar-rose mb-1">4 Phases</div>
+              <h3 class="text-xl font-semibold">Olympiad Competition</h3>
+            </div>
+          </div>
+          <p class="text-muted-foreground mb-6 leading-relaxed">
+            Global competition with AI stress testing
+          </p>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-rose font-bold text-lg">•</span>
+              <span>Base44 handles backend AI</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-rose font-bold text-lg">•</span>
+              <span>Prize funding contribution</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-rose font-bold text-lg">•</span>
+              <span>Global showcase platform</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pillar 6: Dubai Regional Office -->
+        <div class="p-8 border-2 border-pillar-cyan/30 rounded-lg bg-gradient-to-br from-background to-pillar-cyan/5">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="text-6xl font-bold text-pillar-cyan">6</div>
+            <div class="rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-pillar-cyan text-white">Pillar #6</div>
+          </div>
+          <div class="flex items-center gap-4 mb-4">
+            <svg class="w-12 h-12 text-pillar-cyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+            <div>
+              <div class="text-4xl font-bold text-pillar-cyan mb-1">Dubai HQ</div>
+              <h3 class="text-xl font-semibold">Regional Office</h3>
+            </div>
+          </div>
+          <p class="text-muted-foreground mb-6 leading-relaxed">
+            Regional leadership from Dubai
+          </p>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-cyan font-bold text-lg">•</span>
+              <span>Soft joint venture structure</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-cyan font-bold text-lg">•</span>
+              <span>Dubai Future Foundation access</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pillar-cyan font-bold text-lg">•</span>
+              <span>Government partnership gateway</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What You Get Section -->
+  <section class="py-20 px-4 bg-background animate-fade-in page-break">
+    <div class="container mx-auto max-w-6xl">
+      <div class="text-center mb-16">
+        <div class="inline-block rounded-full border px-4 py-2 text-base font-semibold bg-primary text-white mb-4">
+          Value Exchange
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">What Each Partner Brings</h2>
+        <p class="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          A true partnership where both sides contribute unique strengths
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8 items-start">
+        <!-- Base44 Brings -->
+        <div class="p-8 border-2 border-primary/30 rounded-lg bg-gradient-to-br from-background to-primary/5">
+          <div class="flex items-center gap-4 mb-6">
+            <svg class="w-14 h-14 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            <div>
+              <h3 class="text-2xl font-bold">Base44 Brings</h3>
+              <p class="text-muted-foreground">Technology & Platform</p>
+            </div>
+          </div>
+          
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
+              <span class="text-primary font-bold text-xl">•</span>
+              <div>
+                <p class="font-semibold">AI Coding Platform</p>
+                <p class="text-sm text-muted-foreground">Full vibe coding platform with AI assistance</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
+              <span class="text-primary font-bold text-xl">•</span>
+              <div>
+                <p class="font-semibold">10,000 Student Credits</p>
+                <p class="text-sm text-muted-foreground">Immediate onboarding capacity</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
+              <span class="text-primary font-bold text-xl">•</span>
+              <div>
+                <p class="font-semibold">Teachers & Curriculum</p>
+                <p class="text-sm text-muted-foreground">Base44 instructors for co-branded programs</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
+              <span class="text-primary font-bold text-xl">•</span>
+              <div>
+                <p class="font-semibold">Competition Backend</p>
+                <p class="text-sm text-muted-foreground">AI stress testing for Olympiad</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
+              <span class="text-primary font-bold text-xl">•</span>
+              <div>
+                <p class="font-semibold">Dubai Office Setup</p>
+                <p class="text-sm text-muted-foreground">Regional HQ with leadership team</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Learn with Leaders Brings -->
+        <div class="p-8 border-2 border-accent/30 rounded-lg bg-gradient-to-br from-background to-accent/5">
+          <div class="flex items-center gap-4 mb-6">
+            <svg class="w-14 h-14 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            <div>
+              <h3 class="text-2xl font-bold">Learn with Leaders Brings</h3>
+              <p class="text-muted-foreground">Distribution & Access</p>
+            </div>
+          </div>
+          
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3 p-3 rounded-lg bg-accent/5 border border-accent/10">
+              <span class="text-accent font-bold text-xl">•</span>
+              <div>
+                <p class="font-semibold">School Networks</p>
+                <p class="text-sm text-muted-foreground">Direct access to MENA/Africa K-12</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 p-3 rounded-lg bg-accent/5 border border-accent/10">
+              <span class="text-accent font-bold text-xl">•</span>
+              <div>
+                <p class="font-semibold">Government Relationships</p>
+                <p class="text-sm text-muted-foreground">Ministry connections for scale</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 p-3 rounded-lg bg-accent/5 border border-accent/10">
+              <span class="text-accent font-bold text-xl">•</span>
+              <div>
+                <p class="font-semibold">Brand & Credibility</p>
+                <p class="text-sm text-muted-foreground">Trusted education partner in region</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 p-3 rounded-lg bg-accent/5 border border-accent/10">
+              <span class="text-accent font-bold text-xl">•</span>
+              <div>
+                <p class="font-semibold">Olympiad Infrastructure</p>
+                <p class="text-sm text-muted-foreground">Competition management & promotion</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 p-3 rounded-lg bg-accent/5 border border-accent/10">
+              <span class="text-accent font-bold text-xl">•</span>
+              <div>
+                <p class="font-semibold">Local Operations</p>
+                <p class="text-sm text-muted-foreground">On-ground support and delivery</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Total Value Callout -->
+      <div class="mt-12 p-8 border-2 border-gold rounded-lg bg-gradient-to-r from-gold/10 via-primary/10 to-accent/10">
+        <div class="flex items-center justify-center gap-6 flex-wrap">
+          <svg class="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <div class="text-center">
+            <p class="text-3xl font-bold mb-2">
+              Platform + Distribution = Market Dominance
+            </p>
+            <p class="text-muted-foreground">
+              Neither partner can achieve this alone. Together, we own K-12 AI coding in the region.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- India Free School Pilot -->
+  <section class="py-10 px-4 bg-muted/30 animate-fade-in page-break">
+    <div class="container mx-auto max-w-4xl">
+      <!-- Visual Connector -->
+      <div class="flex justify-center mb-8">
+        <div class="w-1 h-16 bg-gradient-to-b from-transparent via-primary to-transparent"></div>
+      </div>
+      
+      <div class="text-center mb-8">
+        <div class="inline-block rounded-full border px-4 py-2 text-base font-semibold bg-pillar-rose text-white mb-4">
+          Social Impact
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">India Free School Pilot</h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Proof of concept that changes lives, not just builds apps
+        </p>
+      </div>
+      
+      <div class="p-8 border-2 border-pillar-rose/30 rounded-lg bg-gradient-to-br from-background to-pillar-rose/5">
+        <p class="text-lg text-muted-foreground mb-8 leading-relaxed">
+          100 children from daily wage worker families in India learn to build income-generating projects on Base44.
+        </p>
+        
+        <!-- Why This Matters Callout -->
+        <div class="bg-pillar-rose/10 border-l-4 border-pillar-rose p-6 rounded-r-lg mb-8">
+          <p class="font-bold text-lg mb-2">Why This Matters</p>
+          <p class="text-muted-foreground">
+            Creates powerful ESG story, demonstrates social impact at scale, and generates authentic PR that money can't buy
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-gradient-to-br from-pillar-rose/10 to-pillar-rose/5 p-6 rounded-xl border border-pillar-rose/20">
+            <h4 class="font-bold text-xl mb-4">The Opportunity</h4>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li>• 100 students from underserved communities</li>
+              <li>• Build real projects that generate income</li>
+              <li>• Perfect ESG story for global PR</li>
+            </ul>
+          </div>
+          
+          <div class="bg-gradient-to-br from-primary/10 to-accent/10 p-6 rounded-xl border border-primary/20">
+            <h4 class="font-bold text-xl mb-4">Investment Needed</h4>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li>• $25K for scholarships and educator travel</li>
+              <li>• Expected: 50 income-generating projects</li>
+              <li>• Global PR and case studies</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+      <!-- Contact Info -->
+      <div class="p-6 border border-border rounded-lg bg-muted/30">
+        <div class="text-center text-sm text-muted-foreground">
+          <p class="mb-2">
+            <strong>Questions?</strong> Reach out anytime:
+          </p>
+          <p>
+            📧 partnership@base44.com | 📱 +971 XX XXX XXXX
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 px-4 bg-muted/30 print-hidden">
+    <div class="container mx-auto max-w-6xl text-center text-sm text-muted-foreground">
+      <p>© 2025 Base44 × Learn with Leaders Strategic Partnership Proposal</p>
+      <p class="mt-2">Confidential & Proprietary</p>
+    </div>
+  </footer>
+
+</body>
+</html>

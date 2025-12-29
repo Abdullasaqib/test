@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qatar Foundation Partnership Briefing | NEXT_</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: white;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+        
+        .page {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 50px;
+            background: white;
+            min-height: 100vh;
+        }
+        
+        .page-break {
+            page-break-before: always;
+            padding-top: 40px;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #8A1538;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #8A1538;
+            letter-spacing: -0.02em;
+        }
+        
+        .logo span {
+            color: #C9A227;
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, #8A1538 0%, #6D1133 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #faf5f6 0%, #f5eff0 100%);
+            border-radius: 12px;
+            border-left: 4px solid #8A1538;
+        }
+        
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #8A1538;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 16px;
+            color: #555;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #8A1538;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, #8A1538 0%, transparent 100%);
+        }
+        
+        /* Executive Summary */
+        .executive-summary {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #C9A227;
+        }
+        
+        .executive-summary p {
+            font-size: 15px;
+            color: #333;
+        }
+        
+        .executive-summary strong {
+            color: #8A1538;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-box {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-left: 3px solid #8A1538;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-box .country {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 5px;
+        }
+        
+        .stat-box .number {
+            font-size: 20px;
+            font-weight: 800;
+            color: #8A1538;
+        }
+        
+        .stat-box .label {
+            font-size: 10px;
+            color: #888;
+        }
+        
+        /* Strengths Grid */
+        .strengths-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .strength-card {
+            background: linear-gradient(135deg, #faf5f6 0%, white 100%);
+            border: 1px solid #e5e7eb;
+            padding: 20px;
+            border-radius: 10px;
+            border-top: 3px solid #8A1538;
+        }
+        
+        .strength-card .icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .strength-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #8A1538;
+            margin-bottom: 5px;
+        }
+        
+        .strength-card p {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Education City Section */
+        .education-city {
+            background: linear-gradient(135deg, #8A1538 0%, #6D1133 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .education-city h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #C9A227;
+        }
+        
+        .university-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .university-tag {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        /* Timeline */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .timeline-step {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .timeline-step .week {
+            font-size: 10px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-step .phase {
+            font-size: 13px;
+            font-weight: 700;
+            color: #8A1538;
+        }
+        
+        .timeline-arrow {
+            color: #C9A227;
+            font-size: 20px;
+            padding: 0 10px;
+        }
+        
+        /* Pilot Box */
+        .pilot-box {
+            background: linear-gradient(135deg, #8A1538 0%, #6D1133 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .pilot-box h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #C9A227;
+        }
+        
+        .pilot-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .pilot-stat {
+            text-align: center;
+        }
+        
+        .pilot-stat .value {
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+        }
+        
+        .pilot-stat .label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Checklist */
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #333;
+        }
+        
+        .checklist-item .check {
+            color: #8A1538;
+            font-weight: bold;
+        }
+        
+        /* ROI Table */
+        .roi-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            font-size: 13px;
+        }
+        
+        .roi-table th {
+            background: #8A1538;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .roi-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .roi-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        /* Quote */
+        .quote-box {
+            background: linear-gradient(135deg, #faf5f6 0%, #f5eff0 100%);
+            border-left: 4px solid #C9A227;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .quote-box blockquote {
+            font-size: 16px;
+            font-style: italic;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .quote-box cite {
+            font-size: 13px;
+            color: #8A1538;
+            font-weight: 600;
+            font-style: normal;
+        }
+        
+        /* Vision 2030 Tags */
+        .vision-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .vision-tag {
+            background: linear-gradient(135deg, #8A1538 0%, #6D1133 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        /* Contact Box */
+        .contact-box {
+            background: #1a1a1a;
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .contact-box h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .contact-box p {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+        
+        .contact-box .email {
+            font-size: 18px;
+            color: #C9A227;
+            font-weight: 600;
+        }
+        
+        .contact-box .note {
+            font-size: 11px;
+            color: #666;
+            margin-top: 15px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 11px;
+            color: #888;
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .page {
+                padding: 30px 40px;
+            }
+            
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">NEXT<span>_</span></div>
+            <div class="badge">Qatar Foundation Partnership Briefing</div>
+        </div>
+        
+        <!-- Hero -->
+        <div class="hero">
+            <h1>Building the Next Generation of Qatari Innovators</h1>
+            <p>A Strategic Partnership Proposal for Qatar Foundation</p>
+        </div>
+        
+        <!-- Executive Summary -->
+        <div class="section-title">Executive Summary</div>
+        <div class="executive-summary">
+            <p>
+                <strong>Qatar's World Cup 2022 proved to the world</strong> that this nation can execute at the highest level on the global stage. Now Qatar has the opportunity to lead in preparing youth for the AI economy. With <strong>Education City's 6 world-class universities</strong>, Qatar Foundation's mission to unlock human potential, and <strong>Qatar National Vision 2030's</strong> commitment to a knowledge-based economy, the infrastructure for leadership already exists. What's needed is the curriculum to activate it.
+            </p>
+        </div>
+        
+        <!-- Global AI Race -->
+        <div class="section-title">The Global AI Race Has Begun</div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="country">🇨🇳 China</div>
+                <div class="number">200M</div>
+                <div class="label">students in AI by 2030</div>
+            </div>
+            <div class="stat-box">
+                <div class="country">🇸🇬 Singapore</div>
+                <div class="number">100%</div>
+                <div class="label">mandatory AI literacy</div>
+            </div>
+            <div class="stat-box">
+                <div class="country">🇪🇪 Estonia</div>
+                <div class="number">Age 6</div>
+                <div class="label">AI education begins</div>
+            </div>
+            <div class="stat-box">
+                <div class="country">🇮🇱 Israel</div>
+                <div class="number">#1</div>
+                <div class="label">startup nation</div>
+            </div>
+        </div>
+        
+        <!-- Qatar's Unique Strengths -->
+        <div class="section-title">Why Qatar Will Lead</div>
+        <div class="strengths-grid">
+            <div class="strength-card">
+                <div class="icon">🏆</div>
+                <h3>World Cup Legacy</h3>
+                <p>Proven global execution capability. Qatar delivered the impossible—now deliver education innovation.</p>
+            </div>
+            <div class="strength-card">
+                <div class="icon">🎓</div>
+                <h3>Education City</h3>
+                <p>6 elite global universities create an unmatched K-12 to higher education pipeline.</p>
+            </div>
+            <div class="strength-card">
+                <div class="icon">🌍</div>
+                <h3>WISE Summit Host</h3>
+                <p>Qatar hosts the world's premier education innovation summit—perfect Demo Day showcase.</p>
+            </div>
+            <div class="strength-card">
+                <div class="icon">📊</div>
+                <h3>Vision 2030</h3>
+                <p>Knowledge economy is a national priority with full government commitment and funding.</p>
+            </div>
+        </div>
+        
+        <!-- Education City -->
+        <div class="education-city">
+            <h3>🎓 Education City: The World's Most Unique University Ecosystem</h3>
+            <div class="university-grid">
+                <div class="university-tag">Northwestern University</div>
+                <div class="university-tag">Georgetown University</div>
+                <div class="university-tag">Carnegie Mellon</div>
+                <div class="university-tag">Texas A&M</div>
+                <div class="university-tag">Virginia Commonwealth</div>
+                <div class="university-tag">Weill Cornell Medicine</div>
+            </div>
+            <p style="margin-top: 15px; font-size: 13px; opacity: 0.9;">
+                Students who master AI in K-12 become stronger candidates for these world-class institutions—creating a complete pipeline from primary school to global career.
+            </p>
+        </div>
+        
+        <!-- Timeline -->
+        <div class="section-title">The 12-Week Journey</div>
+        <div class="timeline">
+            <div class="timeline-step">
+                <div class="week">Weeks 1-4</div>
+                <div class="phase">DISCOVER</div>
+            </div>
+            <div class="timeline-arrow">→</div>
+            <div class="timeline-step">
+                <div class="week">Weeks 5-8</div>
+                <div class="phase">BUILD WITH AI</div>
+            </div>
+            <div class="timeline-arrow">→</div>
+            <div class="timeline-step">
+                <div class="week">Weeks 9-12</div>
+                <div class="phase">LAUNCH</div>
+            </div>
+            <div class="timeline-arrow">→</div>
+            <div class="timeline-step">
+                <div class="week">Day 90</div>
+                <div class="phase">DEMO DAY 🚀</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page 2 -->
+    <div class="page page-break">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">NEXT<span>_</span></div>
+            <div class="badge">Pilot Proposal</div>
+        </div>
+        
+        <!-- Pilot Box -->
+        <div class="pilot-box">
+            <h2>🚀 90-Day Pilot Program Proposal</h2>
+            <div class="pilot-stats">
+                <div class="pilot-stat">
+                    <div class="value">5</div>
+                    <div class="label">QF Schools</div>
+                </div>
+                <div class="pilot-stat">
+                    <div class="value">1,000</div>
+                    <div class="label">Students</div>
+                </div>
+                <div class="pilot-stat">
+                    <div class="value">$35K</div>
+                    <div class="label">Investment</div>
+                </div>
+                <div class="pilot-stat">
+                    <div class="value">90</div>
+                    <div class="label">Days to Demo Day</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- What's Included -->
+        <div class="section-title">What's Included</div>
+        <div class="checklist">
+            <div class="checklist-item"><span class="check">✓</span> Full Platform Access (12 months)</div>
+            <div class="checklist-item"><span class="check">✓</span> 12-Week AI Curriculum</div>
+            <div class="checklist-item"><span class="check">✓</span> Teacher Training (QF PD integration)</div>
+            <div class="checklist-item"><span class="check">✓</span> AI Building Tools</div>
+            <div class="checklist-item"><span class="check">✓</span> Arabic Interface (Q2 2026)</div>
+            <div class="checklist-item"><span class="check">✓</span> Analytics Dashboard for QF Leadership</div>
+            <div class="checklist-item"><span class="check">✓</span> Demo Day Showcase</div>
+            <div class="checklist-item"><span class="check">✓</span> Potential WISE Summit Feature</div>
+        </div>
+        
+        <!-- ROI Projections -->
+        <div class="section-title">ROI Projections</div>
+        <table class="roi-table">
+            <thead>
+                <tr>
+                    <th>Timeline</th>
+                    <th>Students</th>
+                    <th>Student Businesses</th>
+                    <th>Investment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Year 1 (Pilot)</strong></td>
+                    <td>2,000</td>
+                    <td>400</td>
+                    <td>$70,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Year 3 (Scale)</strong></td>
+                    <td>20,000</td>
+                    <td>4,000</td>
+                    <td>$500,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Year 5 (National)</strong></td>
+                    <td>100,000</td>
+                    <td>20,000</td>
+                    <td>$2,000,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Regional Export</strong></td>
+                    <td colspan="3">GCC licensing potential as Qatar becomes model for region</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- Quote -->
+        <div class="quote-box">
+            <blockquote>
+                "Education is the single most important tool to empower individuals to shape their own destinies."
+            </blockquote>
+            <cite>— Her Highness Sheikha Moza bint Nasser, Founder of Qatar Foundation</cite>
+        </div>
+        
+        <!-- Vision 2030 Alignment -->
+        <div class="section-title">Qatar National Vision 2030 Alignment</div>
+        <div class="vision-tags">
+            <span class="vision-tag">Knowledge Economy</span>
+            <span class="vision-tag">Human Capital Development</span>
+            <span class="vision-tag">Economic Diversification</span>
+            <span class="vision-tag">Innovation Ecosystem</span>
+            <span class="vision-tag">Youth Empowerment</span>
+            <span class="vision-tag">Global Competitiveness</span>
+        </div>
+        
+        <!-- Contact -->
+        <div class="contact-box">
+            <h3>Schedule a Qatar Foundation Briefing</h3>
+            <p>Explore how NEXT_ can help Qatar lead the region in AI-native education</p>
+            <div class="email">partnerships@nextbillionlab.com</div>
+            <div class="note">Prepared for Qatar Foundation leadership. Confidential.</div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>NEXT_</strong> | Building What's NEXT_ for Qatar | © 2025 NEXT Billion Lab</p>
+            <p style="margin-top: 5px;">This document is confidential and intended for Qatar Foundation leadership only.</p>
+        </div>
+    </div>
+</body>
+</html>

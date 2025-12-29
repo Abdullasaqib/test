@@ -1,0 +1,73 @@
+project_id = "ynenfalgqmpobgmojenh"
+
+[functions.generate-landing-page]
+verify_jwt = false
+
+[functions.generate-pitch-deck]
+verify_jwt = false
+
+[functions.ai-coach]
+verify_jwt = false
+
+[functions.pitch-practice]
+verify_jwt = false
+
+[functions.score-pitch-ai]
+verify_jwt = false
+
+[functions.score-application]
+verify_jwt = false
+
+[functions.advance-to-round]
+verify_jwt = false
+
+[functions.upload-pitch-video]
+verify_jwt = false
+
+[functions.generate-stuck-prompt]
+verify_jwt = false
+
+[functions.analyze-skill-intelligence]
+verify_jwt = false
+
+[functions.analyze-student-strengths]
+verify_jwt = false
+
+[functions.refine-artifact]
+verify_jwt = false
+
+[functions.generate-logo]
+verify_jwt = false
+
+[functions.log-client-error]
+verify_jwt = false
+
+[functions.evaluate-curriculum]
+verify_jwt = false
+
+[functions.sales-agent]
+verify_jwt = false
+
+[functions.generate-case-study]
+verify_jwt = false
+
+[functions.generate-case-study-thumbnail]
+verify_jwt = false
+
+[functions.evaluate-sprint-response]
+verify_jwt = false
+
+[functions.send-parent-consent]
+verify_jwt = false
+
+[functions.verify-parent-consent]
+verify_jwt = false
+
+[functions.shuffle-quiz-answers]
+verify_jwt = false
+
+[functions.fix-curriculum-quality]
+verify_jwt = false
+
+[functions.send-campaign-email]
+verify_jwt = false

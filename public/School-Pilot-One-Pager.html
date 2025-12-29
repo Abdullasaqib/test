@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXT_ Billion Lab | School Partnership One-Pager</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.5;
+      color: #0a0a0a;
+      background: #fff;
+      max-width: 8.5in;
+      margin: 0 auto;
+      padding: 0.5in;
+    }
+    
+    @media print {
+      body { padding: 0.4in; }
+      .no-print { display: none; }
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 3px solid #0a0a0a;
+    }
+    
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    
+    .logo span {
+      color: #f59e0b;
+    }
+    
+    .tagline {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+    
+    .section {
+      margin-bottom: 16px;
+    }
+    
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #f59e0b;
+      margin-bottom: 8px;
+    }
+    
+    .section h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    
+    .section p, .section li {
+      font-size: 12px;
+      color: #333;
+    }
+    
+    .section ul {
+      padding-left: 16px;
+    }
+    
+    .section li {
+      margin-bottom: 4px;
+    }
+    
+    .highlight-box {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border: 2px solid #f59e0b;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .highlight-box h3 {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    
+    .highlight-box p {
+      font-size: 12px;
+      margin: 0;
+    }
+    
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .stat {
+      text-align: center;
+      padding: 12px 8px;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+    
+    .stat-number {
+      font-size: 24px;
+      font-weight: 800;
+      color: #f59e0b;
+    }
+    
+    .stat-label {
+      font-size: 10px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-bottom: 16px;
+    }
+    
+    .pricing-table th {
+      background: #0a0a0a;
+      color: #fff;
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+    
+    .pricing-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .pricing-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+    
+    .cta-box {
+      background: #0a0a0a;
+      color: #fff;
+      padding: 16px 20px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .cta-box h3 {
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+    
+    .cta-box p {
+      font-size: 11px;
+      color: #a1a1aa;
+      margin: 0;
+    }
+    
+    .cta-contact {
+      text-align: right;
+    }
+    
+    .cta-contact a {
+      color: #f59e0b;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    
+    .footer {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="logo">NEXT<span>_</span> BILLION LAB</div>
+      <div class="tagline">Building What's NEXT_</div>
+    </div>
+    <div style="text-align: right; font-size: 11px; color: #666;">
+      School Partnership<br>One-Pager
+    </div>
+  </div>
+
+  <h1>Prepare Your Students for Jobs That Don't Exist Yet</h1>
+  <p class="subtitle">AI education for ages 9-16 that teaches students to BUILD, not just use technology</p>
+
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-number">12</div>
+      <div class="stat-label">Week Program</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">1,100+</div>
+      <div class="stat-label">Micro-Sprints</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Certifications</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">85%</div>
+      <div class="stat-label">Completion Rate</div>
+    </div>
+  </div>
+
+  <div class="two-column">
+    <div>
+      <div class="section">
+        <div class="section-title">The Challenge</div>
+        <h3>Schools Are Teaching Yesterday's Skills</h3>
+        <p>By 2030, 85% of jobs will require AI fluency. Yet most schools are teaching students to USE technology, not CREATE with it. ChatGPT, Lovable, and Cursor are reshaping every industry—and students need to master these tools NOW.</p>
+      </div>
+      
+      <div class="section">
+        <div class="section-title">Our Solution</div>
+        <h3>NEXT_ Billion Lab Curriculum</h3>
+        <ul>
+          <li><strong>5 Phases:</strong> Discover → Validate → Build → Launch → Pitch</li>
+          <li><strong>60 Missions:</strong> Real-world entrepreneurship challenges</li>
+          <li><strong>AI Coach:</strong> 24/7 intelligent mentorship</li>
+          <li><strong>THE TANK:</strong> Investor pitch simulation (like Shark Tank)</li>
+          <li><strong>Demo Day:</strong> Students present real products</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Research Foundation</div>
+        <h3>Pedagogy That Works</h3>
+        <ul>
+          <li>Bloom's Taxonomy (tagged at every sprint)</li>
+          <li>Kolb's Experiential Learning Cycle</li>
+          <li>Growth Mindset Theory</li>
+          <li>ISTE Standards Aligned</li>
+          <li>21st Century Skills Framework</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="highlight-box">
+        <h3>🚀 FREE PILOT PROGRAM</h3>
+        <p>30 students • 12 weeks • $0 cost<br>Includes teacher training, support, and Demo Day organization.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Student Outcomes</div>
+        <h3>What Students Achieve</h3>
+        <ul>
+          <li>✓ Build and launch a real product</li>
+          <li>✓ Earn LinkedIn-shareable NEXT_ CERTIFIED credentials</li>
+          <li>✓ Present to simulated investors at Demo Day</li>
+          <li>✓ Master AI tools used by professionals</li>
+          <li>✓ Develop entrepreneurial mindset</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Implementation</div>
+        <h3>Flexible Integration Options</h3>
+        <ul>
+          <li><strong>After-School:</strong> 2 hours/week for 12 weeks</li>
+          <li><strong>Curriculum:</strong> Replace outdated tech classes</li>
+          <li><strong>Summer:</strong> 4-week intensive program</li>
+          <li><strong>Club:</strong> Entrepreneurship/innovation club</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3 Age Tracks</div>
+        <p style="font-size: 12px;">
+          <strong>Junior (9-11):</strong> Playful, visual, safe<br>
+          <strong>Teen (12-14):</strong> Peer-focused, social impact<br>
+          <strong>Advanced (15-16):</strong> College-prep, investor-ready
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">School Pricing</div>
+  <table class="pricing-table">
+    <tr>
+      <th>Package</th>
+      <th>Students</th>
+      <th>Price/Student</th>
+      <th>Includes</th>
+    </tr>
+    <tr>
+      <td><strong>Pilot</strong></td>
+      <td>Up to 30</td>
+      <td>FREE</td>
+      <td>Full access, teacher training, Demo Day support</td>
+    </tr>
+    <tr>
+      <td><strong>Standard</strong></td>
+      <td>31-100</td>
+      <td>$45/year</td>
+      <td>Everything in Pilot + priority support</td>
+    </tr>
+    <tr>
+      <td><strong>Volume</strong></td>
+      <td>101-500</td>
+      <td>$35/year</td>
+      <td>Everything + dedicated success manager</td>
+    </tr>
+    <tr>
+      <td><strong>Enterprise</strong></td>
+      <td>500+</td>
+      <td>$30/year</td>
+      <td>Custom curriculum, white-label options</td>
+    </tr>
+  </table>
+
+  <div class="cta-box">
+    <div>
+      <h3>Ready to Prepare Your Students for the Future?</h3>
+      <p>Schools that move first will produce founders. Schools that wait will explain why they didn't.</p>
+    </div>
+    <div class="cta-contact">
+      <a href="mailto:schools@nextbillionlab.com">schools@nextbillionlab.com</a><br>
+      <span style="font-size: 11px; color: #a1a1aa;">nextbillionlab.com/schools</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>NEXT_ Billion Lab © 2025 | Building What's NEXT_</div>
+    <div>1 Million NEXT_ CERTIFIED by 2026</div>
+  </div>
+</body>
+</html>
