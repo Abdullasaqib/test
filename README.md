@@ -60,9 +60,61 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## 🚀 How to Deploy to Vercel (Production)
 
-Simply open [Lovable](https://lovable.dev/projects/b89d711d-e8d4-45fe-b80a-652f1defce62) and click on Share -> Publish.
+This project is configured for production deployment on Vercel with full-stack security.
+
+### Quick Deploy (5 minutes)
+
+1. **Connect to Vercel**
+   - Go to [vercel.com](https://vercel.com) and sign in with GitHub
+   - Click "Add New Project"
+   - Import repository: `Abdullasaqib/test`
+   - Vercel will auto-detect Vite configuration
+
+2. **Configure Environment Variables**
+   Add these in Vercel project settings:
+   ```
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
+   ```
+
+3. **Deploy**
+   - Click "Deploy" and wait for build (~2-3 minutes)
+   - Your app will be live!
+
+4. **Deploy Supabase Functions**
+   ```bash
+   npm install -g supabase
+   supabase login
+   supabase link --project-ref YOUR_PROJECT_REF
+   supabase functions deploy ai-coach
+   supabase functions deploy upload-pitch-video
+   supabase functions deploy log-client-error
+   ```
+
+5. **Update CORS**
+   - Edit `supabase/functions/_shared/security.ts`
+   - Add your Vercel URL to `ALLOWED_ORIGINS`
+   - Redeploy functions
+
+📖 **Full deployment guide**: See [setup-vercel.md](./setup-vercel.md) and [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
+
+### Security Features
+
+✅ **Frontend Security**
+- Authentication checks on all protected routes
+- Input validation and sanitization
+- Client-side rate limiting
+- Session validation
+
+✅ **Backend Security**
+- JWT token verification
+- Server-side rate limiting
+- CORS origin restrictions
+- Ownership verification
+
+📖 **Security details**: See [SECURITY_IMPLEMENTATION.md](./SECURITY_IMPLEMENTATION.md)
 
 ## Can I connect a custom domain to my Lovable project?
 
