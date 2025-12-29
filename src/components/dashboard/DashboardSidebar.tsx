@@ -54,16 +54,20 @@ export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: Dashboard
   const { canAccess, tier } = useStudentPricingTier();
   const { streak } = useSprints();
   const collapsed = state === "collapsed";
-  
-  const progress = Math.round((currentWeek / totalWeeks) * 100);
-  
+
+  // Extract week from URL if present (real-time update)
+  const weekMatch = location.pathname.match(/\/week\/(\d+)/);
+  const displayWeek = weekMatch ? parseInt(weekMatch[1]) : currentWeek;
+
+  const progress = Math.round((displayWeek / totalWeeks) * 100);
+
   // Certificate access based on tier
   const hasAIBuilder = canAccess('curriculum_access') && tier?.features?.curriculum_access === 'full';
   const hasAILauncher = canAccess('live_classes');
 
   // Check if user is on any certificate-related route
-  const isCertificateActive = location.pathname.includes('/dashboard/certification') || 
-                               location.pathname.includes('/dashboard/curriculum');
+  const isCertificateActive = location.pathname.includes('/dashboard/certification') ||
+    location.pathname.includes('/dashboard/curriculum');
 
   const handleSignOut = async () => {
     await signOut();
@@ -82,10 +86,10 @@ export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: Dashboard
             </div>
           ) : (
             <div className="flex flex-col">
-              <CursorWordmark 
-                word="NEXT" 
-                size="md" 
-                className="text-sidebar-foreground" 
+              <CursorWordmark
+                word="NEXT"
+                size="md"
+                className="text-sidebar-foreground"
                 cursorClassName="text-primary"
                 subtitle="BILLION LAB"
                 subtitleClassName="text-sidebar-foreground/60"
@@ -107,7 +111,7 @@ export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: Dashboard
               </ProgressRing>
               <div>
                 <p className="text-sm font-medium text-sidebar-foreground">
-                  Week {currentWeek} of {totalWeeks}
+                  Week {displayWeek} of {totalWeeks}
                 </p>
                 <p className="text-xs text-sidebar-foreground/60">
                   Keep going!
@@ -142,7 +146,7 @@ export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: Dashboard
               <Collapsible defaultOpen={isCertificateActive} className="group/collapsible">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton 
+                    <SidebarMenuButton
                       tooltip="My Certificates"
                       isActive={isCertificateActive}
                     >
@@ -155,7 +159,7 @@ export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: Dashboard
                     <SidebarMenuSub>
                       {/* AI Foundations - Always available */}
                       <SidebarMenuSubItem>
-                        <SidebarMenuSubButton 
+                        <SidebarMenuSubButton
                           asChild
                           isActive={location.pathname.includes('/dashboard/certification/prompt-engineering-fundamentals')}
                         >
@@ -171,7 +175,7 @@ export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: Dashboard
 
                       {/* AI Builder - Tier gated */}
                       <SidebarMenuSubItem>
-                        <SidebarMenuSubButton 
+                        <SidebarMenuSubButton
                           asChild
                           isActive={location.pathname.includes('/dashboard/curriculum')}
                           className={!hasAIBuilder ? "opacity-60" : ""}
@@ -186,7 +190,7 @@ export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: Dashboard
 
                       {/* AI Launcher - ACCELERATOR only */}
                       <SidebarMenuSubItem>
-                        <SidebarMenuSubButton 
+                        <SidebarMenuSubButton
                           asChild
                           isActive={location.pathname.includes('/dashboard/certification/ai-launcher')}
                           className={!hasAILauncher ? "opacity-60" : ""}
@@ -220,8 +224,8 @@ export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: Dashboard
                     <Zap className="h-4 w-4" />
                     <span>Daily Practice</span>
                     {streak && streak.current_streak > 0 && (
-                      <Badge 
-                        variant="outline" 
+                      <Badge
+                        variant="outline"
                         className="ml-auto text-[10px] px-1.5 py-0 h-4 bg-orange-500/10 text-orange-500 border-orange-500/30"
                       >
                         🔥 {streak.current_streak}
@@ -312,7 +316,7 @@ export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: Dashboard
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        
+
         {/* User info */}
         {!collapsed && user && (
           <div className="px-2 py-2 mt-2">
