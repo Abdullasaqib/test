@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -147,6 +148,7 @@ const getWeekPrompts = (weekNumber: number) => {
 };
 
 export default function DashboardCoach() {
+  const location = useLocation();
   const { student } = useStudent();
   const { currentWeek, weekThemes } = useJourney();
   const weekNumber = currentWeek || 1;
@@ -170,6 +172,18 @@ What do you need help with? Pick a quick action below or just ask me anything!`,
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  // Handle prefillPrompt from navigation state
+  useEffect(() => {
+    const prefillPrompt = (location.state as any)?.prefillPrompt;
+    if (prefillPrompt && input === "") {
+      setInput(prefillPrompt);
+      // Auto-send after a brief delay
+      setTimeout(() => {
+        handleSend(prefillPrompt);
+      }, 500);
+    }
+  }, [location.state]);
 
   const suggestedPrompts = getWeekPrompts(weekNumber);
 

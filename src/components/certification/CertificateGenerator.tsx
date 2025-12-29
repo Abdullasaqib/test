@@ -531,10 +531,25 @@ export function CertificateGenerator({
       
       printWindow.document.close();
       
+      // Wait for content to load, then print and close
+      printWindow.onload = () => {
+        setTimeout(() => {
+          printWindow.print();
+          // Close window after print dialog is dismissed (or after a delay)
+          setTimeout(() => {
+            printWindow.close();
+            setIsDownloading(false);
+          }, 1000);
+        }, 500);
+      };
+      
+      // Fallback: close window if onload doesn't fire
       setTimeout(() => {
-        printWindow.print();
+        if (!printWindow.closed) {
+          printWindow.close();
+        }
         setIsDownloading(false);
-      }, 800);
+      }, 5000);
       
       toast.success("Opening print dialog to save as PDF");
     } catch (error) {

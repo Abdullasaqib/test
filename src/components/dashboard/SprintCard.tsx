@@ -234,7 +234,7 @@ export function SprintCard() {
               Come back tomorrow to keep your 🔥{streak?.current_streak || 0} streak alive!
             </p>
 
-            {/* Mini Founder DNA Preview */}
+            {/* Mini Founder DNA Preview - Use DNA profile if available, otherwise use archetype */}
             {dominantArchetype && (
               <div className="pt-3 border-t border-border/50">
                 <Link to="/dashboard/dna" className="flex items-center justify-between hover:bg-background/50 rounded-lg p-2 -mx-2 transition-colors">
@@ -243,6 +243,7 @@ export function SprintCard() {
                     <div>
                       <p className="text-xs text-muted-foreground">Your Founder Style</p>
                       <p className="font-medium text-sm">{dominantArchetype.name}</p>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">From Daily Practice</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-1 text-xs text-primary">

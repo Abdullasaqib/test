@@ -105,12 +105,37 @@ export function useCertification(certificationSlug?: string): UseCertificationRe
 
       // Fetch enrollment and progress if student exists
       if (student?.id) {
-        const { data: enrollData } = await supabase
-          .from("student_certifications")
-          .select("*")
-          .eq("student_id", student.id)
-          .eq("certification_id", cert.id)
-          .maybeSingle();
+        // For AI Builder certificate, also check for auto-granted certificate
+        const AI_BUILDER_CERT_ID = '59605064-f965-4fd1-976a-2a79b295e3e0';
+        const isAIBuilder = cert.id === AI_BUILDER_CERT_ID || slug === 'ai-founders-certificate';
+        
+        let enrollData;
+        if (isAIBuilder) {
+          // Check both the certification ID from the table and the auto-granted ID
+          const { data: enrollData1 } = await supabase
+            .from("student_certifications")
+            .select("*")
+            .eq("student_id", student.id)
+            .eq("certification_id", cert.id)
+            .maybeSingle();
+          
+          const { data: enrollData2 } = await supabase
+            .from("student_certifications")
+            .select("*")
+            .eq("student_id", student.id)
+            .eq("certification_id", AI_BUILDER_CERT_ID)
+            .maybeSingle();
+          
+          enrollData = enrollData1 || enrollData2;
+        } else {
+          const { data } = await supabase
+            .from("student_certifications")
+            .select("*")
+            .eq("student_id", student.id)
+            .eq("certification_id", cert.id)
+            .maybeSingle();
+          enrollData = data;
+        }
 
         setEnrollment(enrollData);
 

@@ -44,6 +44,14 @@ serve(async (req) => {
       supabase.from('student_missions').select('*').eq('student_id', studentId).eq('status', 'completed'),
     ]);
 
+    // Check if student exists
+    if (studentRes.error || !studentRes.data) {
+      return new Response(JSON.stringify({ error: 'Student not found' }), {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const studentData: StudentData = {
       student: studentRes.data,
       skillScores: skillsRes.data || [],

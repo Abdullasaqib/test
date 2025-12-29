@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useStudent } from "./useStudent";
 
@@ -143,13 +144,18 @@ export function useJourney() {
     }
   }
 
-  // Find current week
-  const currentWeek = weekProgress.find(w => w.status === 'current' || w.status === 'in_progress')?.week || 1;
+  // Find current week - memoized to prevent recalculation on navigation
+  const currentWeek = useMemo(() => {
+    return weekProgress.find(w => w.status === 'current' || w.status === 'in_progress')?.week || 1;
+  }, [weekProgress]);
   
-  // Calculate total progress
-  const totalCompleted = weekProgress.reduce((sum, w) => sum + w.completedMissions, 0);
-  const totalMissions = weekProgress.reduce((sum, w) => sum + w.totalMissions, 0);
-  const overallProgress = totalMissions > 0 ? Math.round((totalCompleted / totalMissions) * 100) : 0;
+  // Calculate total progress - memoized
+  const { totalCompleted, totalMissions, overallProgress } = useMemo(() => {
+    const completed = weekProgress.reduce((sum, w) => sum + w.completedMissions, 0);
+    const total = weekProgress.reduce((sum, w) => sum + w.totalMissions, 0);
+    const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+    return { totalCompleted: completed, totalMissions: total, overallProgress: progress };
+  }, [weekProgress]);
 
   return {
     weekProgress,

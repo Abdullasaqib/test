@@ -109,8 +109,9 @@ export function useFounderDNA() {
       );
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Analysis failed');
+        const error = await response.json().catch(() => ({ error: 'Analysis failed' }));
+        const errorMessage = error.error || error.message || 'Analysis failed. Please try again.';
+        throw new Error(errorMessage);
       }
 
       return response.json();
@@ -122,10 +123,11 @@ export function useFounderDNA() {
         description: "Your Founder DNA profile has been updated.",
       });
     },
-    onError: (error) => {
+    onError: (error: any) => {
+      const errorMessage = error?.message || 'Analysis failed. Please ensure you have completed some missions and try again.';
       toast({
         title: "Analysis Failed",
-        description: error.message,
+        description: errorMessage.includes('not found') ? 'Student profile not found. Please contact support.' : errorMessage,
         variant: "destructive",
       });
     },

@@ -30,6 +30,7 @@ import { MCFeedbackDisplay } from "@/components/sprint/MCFeedbackDisplay";
 import { EffortBadge } from "@/components/sprint/EffortBadge";
 import { SmartNextActions } from "@/components/sprint/SmartNextActions";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import confetti from "canvas-confetti";
 
 type ViewState = 'challenge' | 'submitting' | 'result' | 'explore-tracks';
@@ -177,16 +178,33 @@ export default function DashboardSprint() {
     
     const evaluation = await submitResponse(activeChallenge.id, finalResponse, timeSpent, isBonusMode);
     
-    if (evaluation?.success) {
+    if (evaluation) {
+      // Parse feedback if it's a string
+      let parsedFeedback = evaluation.feedback;
+      if (typeof evaluation.feedback === 'string') {
+        try {
+          parsedFeedback = JSON.parse(evaluation.feedback);
+        } catch {
+          parsedFeedback = evaluation.feedback;
+        }
+      }
+      
       setResult({
-        ...evaluation.attempt,
-        baseXP: evaluation.challenge?.xp_reward || activeChallenge.xp_reward,
+        score: evaluation.score || 0,
+        feedback: parsedFeedback || '',
+        skills_awarded: evaluation.skills_awarded || [],
+        xp_earned: evaluation.xp_earned || 0,
+        archetype: evaluation.archetype,
+        baseXP: activeChallenge.xp_reward,
+        roleFeedback: evaluation.roleFeedback,
       });
       
       // Show celebration overlay first
       setShowCelebration(true);
     } else {
+      // Error occurred, return to challenge view
       setViewState('challenge');
+      toast.error('Failed to evaluate response. Please try again.');
     }
   };
   
