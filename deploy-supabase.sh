@@ -28,3 +28,4 @@ echo "1. Update CORS origins in supabase/functions/_shared/security.ts"
 echo "2. Add your Vercel domain to ALLOWED_ORIGINS"
 echo "3. Redeploy functions after updating CORS"
 
+

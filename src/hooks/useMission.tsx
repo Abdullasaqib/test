@@ -52,8 +52,8 @@ export function useMission() {
       if (!student) return null;
 
       // Get the track based on program
-      const track = student.program === 'junior' ? 'junior' : 
-                    student.program === 'teen' ? 'teen' : 'advanced';
+      const track = student.program === 'junior' ? 'junior' :
+        student.program === 'teen' ? 'teen' : 'advanced';
 
       // Get student's mission progress
       const { data: studentMissions } = await supabase
@@ -91,7 +91,7 @@ export function useMission() {
       // All completed, return last one
       return missions[missions.length - 1];
     },
-    enabled: !!student,
+    enabled: !!student && !studentLoading,
     refetchOnWindowFocus: false,
     placeholderData: (previousData) => previousData,
   });
@@ -102,8 +102,8 @@ export function useMission() {
     queryFn: async () => {
       if (!student || !currentMission) return null;
 
-      const track = student.program === 'junior' ? 'junior' : 
-                    student.program === 'teen' ? 'teen' : 'advanced';
+      const track = student.program === 'junior' ? 'junior' :
+        student.program === 'teen' ? 'teen' : 'advanced';
 
       const { data: missions } = await supabase
         .from('missions')
@@ -115,7 +115,7 @@ export function useMission() {
 
       return missions?.[0] || null;
     },
-    enabled: !!student && !!currentMission,
+    enabled: !!student && !studentLoading && !!currentMission,
     refetchOnWindowFocus: false,
     placeholderData: (previousData) => previousData,
   });
@@ -155,7 +155,7 @@ export function useMission() {
 
       return data as StudentMission | null;
     },
-    enabled: !!student && !!currentMission,
+    enabled: !!student && !studentLoading && !!currentMission,
     refetchOnWindowFocus: false,
     placeholderData: (previousData) => previousData,
   });
@@ -317,7 +317,7 @@ export function useMission() {
 
     // Grant AI Builder Certificate
     const certificateNumber = `NEXT-AB-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`;
-    
+
     await supabase
       .from('student_certifications')
       .insert({
@@ -336,8 +336,8 @@ export function useMission() {
     queryFn: async () => {
       if (!student) return [];
 
-      const track = student.program === 'junior' ? 'junior' : 
-                    student.program === 'teen' ? 'teen' : 'advanced';
+      const track = student.program === 'junior' ? 'junior' :
+        student.program === 'teen' ? 'teen' : 'advanced';
 
       const { data } = await supabase
         .from('missions')

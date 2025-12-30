@@ -26,3 +26,4 @@ Write-Host "1. Update CORS origins in supabase/functions/_shared/security.ts"
 Write-Host "2. Add your Vercel domain to ALLOWED_ORIGINS"
 Write-Host "3. Redeploy functions after updating CORS"
 
+

@@ -45,7 +45,7 @@ export default function Dashboard() {
 
     const channel = supabase
       .channel('student-dashboard-realtime')
-      .on('postgres_changes', 
+      .on('postgres_changes',
         { event: '*', schema: 'public', table: 'student_missions', filter: `student_id=eq.${student.id}` },
         () => {
           queryClient.invalidateQueries({ queryKey: ['current-mission'] });
@@ -76,11 +76,11 @@ export default function Dashboard() {
       supabase.removeChannel(channel);
     };
   }, [student?.id, queryClient]);
-  
-  const firstName = student?.full_name?.split(" ")[0] || 
-                   user?.user_metadata?.full_name?.split(" ")[0] || 
-                   "Builder";
-  
+
+  const firstName = student?.full_name?.split(" ")[0] ||
+    user?.user_metadata?.full_name?.split(" ")[0] ||
+    "Builder";
+
   const currentWeek = currentMission?.week || 1;
   const totalWeeks = 12;
 
@@ -88,12 +88,14 @@ export default function Dashboard() {
   const lastPitchScore = pitchAttempts?.[0]?.score;
 
   // Certification status - use AI Foundations cert ID
+  // ID for: Prompt Engineering Fundamentals (AI Foundations)
   const AI_FOUNDATIONS_ID = "761a157d-a1e0-4423-99b8-a58f5ddad129";
   const aiFoundationsProgress = getProgress(AI_FOUNDATIONS_ID);
-  const isEnrolled = aiFoundationsProgress.isEnrolled;
-  const isCompleted = aiFoundationsProgress.isCompleted;
-  const lessonsCompleted = aiFoundationsProgress.completedLessons;
-  const totalLessons = 10; // AI Foundations has 10 lessons
+
+  const isEnrolled = aiFoundationsProgress?.isEnrolled || false;
+  const isCompleted = aiFoundationsProgress?.isCompleted || false;
+  const lessonsCompleted = aiFoundationsProgress?.completedLessons || 0;
+  const totalLessons = 10; // AI Foundations has 10 lessons mapped in certification_lessons
 
   // Get tier display name
   const getTierBadge = () => {
@@ -148,7 +150,7 @@ export default function Dashboard() {
 
           {/* THE TANK - Show from Week 2+ or if has XP */}
           {showTank && (
-            <TankCard 
+            <TankCard
               founderLevel={pitchLevel}
               totalXP={pitchTotalXP}
               lastScore={lastPitchScore}
@@ -171,7 +173,7 @@ export default function Dashboard() {
                 <p className="text-sm text-muted-foreground">Chat with your AI Coach anytime</p>
               </div>
             </div>
-            <Link 
+            <Link
               to="/dashboard/coach"
               className="flex items-center gap-1 text-sm text-primary font-medium hover:underline"
             >

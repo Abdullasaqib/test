@@ -14,7 +14,7 @@ interface UseStudentReturn {
 }
 
 export function useStudent(): UseStudentReturn {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { isDemoMode, demoStudent } = useDemoMode();
   const [student, setStudent] = useState<Student | null>(null);
   const [loading, setLoading] = useState(true);
@@ -57,8 +57,10 @@ export function useStudent(): UseStudentReturn {
   };
 
   useEffect(() => {
-    fetchStudent();
-  }, [user?.id, isDemoMode]);
+    if (!authLoading) {
+      fetchStudent();
+    }
+  }, [user?.id, isDemoMode, authLoading]);
 
   return {
     student,

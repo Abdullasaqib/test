@@ -59,7 +59,7 @@ export function useCertification(certificationSlug?: string): UseCertificationRe
   }, [certificationSlug]);
 
   useEffect(() => {
-    if (certificationSlug) {
+    if (certificationSlug && student?.id) {
       fetchCertificationDetails(certificationSlug);
     }
   }, [certificationSlug, student?.id]);
@@ -82,7 +82,7 @@ export function useCertification(certificationSlug?: string): UseCertificationRe
   const fetchCertificationDetails = async (slug: string) => {
     try {
       setLoading(true);
-      
+
       // Fetch certification
       const { data: cert, error: certError } = await supabase
         .from("certifications")
@@ -108,7 +108,7 @@ export function useCertification(certificationSlug?: string): UseCertificationRe
         // For AI Builder certificate, also check for auto-granted certificate
         const AI_BUILDER_CERT_ID = '59605064-f965-4fd1-976a-2a79b295e3e0';
         const isAIBuilder = cert.id === AI_BUILDER_CERT_ID || slug === 'ai-founders-certificate';
-        
+
         let enrollData;
         if (isAIBuilder) {
           // Check both the certification ID from the table and the auto-granted ID
@@ -118,14 +118,14 @@ export function useCertification(certificationSlug?: string): UseCertificationRe
             .eq("student_id", student.id)
             .eq("certification_id", cert.id)
             .maybeSingle();
-          
+
           const { data: enrollData2 } = await supabase
             .from("student_certifications")
             .select("*")
             .eq("student_id", student.id)
             .eq("certification_id", AI_BUILDER_CERT_ID)
             .maybeSingle();
-          
+
           enrollData = enrollData1 || enrollData2;
         } else {
           const { data } = await supabase
@@ -162,9 +162,11 @@ export function useCertification(certificationSlug?: string): UseCertificationRe
 
     const { data, error: enrollError } = await supabase
       .from("student_certifications")
-      .insert({
+      .upsert({
         student_id: student.id,
         certification_id: certificationId,
+      }, {
+        onConflict: 'student_id, certification_id'
       })
       .select()
       .single();
@@ -242,7 +244,7 @@ export function useCertification(certificationSlug?: string): UseCertificationRe
 
   const getCompletedLessonsCount = () => progress.length;
 
-  const isLessonCompleted = (lessonId: string) => 
+  const isLessonCompleted = (lessonId: string) =>
     progress.some(p => p.lesson_id === lessonId);
 
   const refetch = () => {

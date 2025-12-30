@@ -19,11 +19,11 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
-import { 
-  Award, 
-  BookOpen, 
-  CheckCircle2, 
-  Clock, 
+import {
+  Award,
+  BookOpen,
+  CheckCircle2,
+  Clock,
   ArrowLeft,
   Play,
   Lock,
@@ -117,12 +117,13 @@ export default function DashboardCertification() {
     getCompletedLessonsCount,
     isLessonCompleted,
   } = useCertification(slug);
-  
+
   const { getProgress, loading: progressLoading } = useCertificationProgress();
 
   const [currentLessonIndex, setCurrentLessonIndex] = useState<number | null>(null);
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [selectedLockedCert, setSelectedLockedCert] = useState<typeof certificates[0] | null>(null);
+  const [enrolling, setEnrolling] = useState(false);
 
   // State for lesson previews by certification ID
   const [lessonPreviews, setLessonPreviews] = useState<Record<string, LessonPreview[]>>({});
@@ -179,12 +180,18 @@ export default function DashboardCertification() {
   }, [lessonId, lessons]);
 
   const handleEnroll = async () => {
-    if (!currentCertification) return;
+    if (!currentCertification || enrolling) return;
     try {
+      setEnrolling(true);
       await enrollInCertification(currentCertification.id);
       toast.success("You're enrolled! Let's start learning.");
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Enrollment error:", error);
+      // Don't show toast if it's already enrolled (conflict handled by upsert but might still throw single() error if count > 1 or other)
+      // Actually with single() and upsert it should be fine, but let's be safe.
       toast.error("Failed to enroll. Please try again.");
+    } finally {
+      setEnrolling(false);
     }
   };
 
@@ -201,7 +208,7 @@ export default function DashboardCertification() {
 
   const handleNextLesson = () => {
     if (currentLessonIndex === null) return;
-    
+
     if (currentLessonIndex === lessons.length - 1) {
       handleCompleteCertification();
     } else {
@@ -375,7 +382,7 @@ export default function DashboardCertification() {
                 certificateNumber={enrollment.certificate_number}
                 completedAt={enrollment.completed_at!}
               />
-              
+
               {/* Download All Summary Cards */}
               {slug === 'prompt-engineering-fundamentals' && (
                 <Card className="border-border/50 bg-card/50">
@@ -448,11 +455,11 @@ export default function DashboardCertification() {
                 <div>
                   <h3 className="font-semibold mb-1">What You'll Build</h3>
                   <p className="text-sm text-muted-foreground">
-                    {slug === 'prompt-engineering-fundamentals' 
+                    {slug === 'prompt-engineering-fundamentals'
                       ? "A personal prompt library with proven templates for any AI tool. You'll craft prompts for content creation, research, problem-solving, and more."
                       : slug === 'ai-founders-certificate'
-                      ? "A real product from idea to launch. You'll interview customers, build an MVP with AI tools, and acquire your first users."
-                      : "A polished pitch deck and investor presentation. You'll practice with AI investors, refine your story, and present at Demo Day."
+                        ? "A real product from idea to launch. You'll interview customers, build an MVP with AI tools, and acquire your first users."
+                        : "A polished pitch deck and investor presentation. You'll practice with AI investors, refine your story, and present at Demo Day."
                     }
                   </p>
                 </div>
@@ -482,13 +489,13 @@ export default function DashboardCertification() {
           {certificates.map((cert) => {
             const Icon = cert.icon;
             const isLocked = !canAccessCertificate(cert.tierRequired);
-            const certProgress = certifications.find(c => c.slug === cert.slug) 
+            const certProgress = certifications.find(c => c.slug === cert.slug)
               ? getProgress(certifications.find(c => c.slug === cert.slug)!.id)
               : null;
-            
+
             const isInProgress = certProgress?.isEnrolled && !certProgress?.isCompleted;
             const isComplete = certProgress?.isCompleted;
-            
+
             const colorClasses = {
               primary: {
                 bg: "bg-primary/10",
@@ -532,25 +539,24 @@ export default function DashboardCertification() {
             };
 
             return (
-              <Card 
+              <Card
                 key={cert.id}
-                className={`relative overflow-hidden transition-all cursor-pointer hover:shadow-xl ${colorClasses.glow} ${
-                  isLocked 
-                    ? "opacity-60 border-border/30" 
-                    : colorClasses.border
-                }`}
+                className={`relative overflow-hidden transition-all cursor-pointer hover:shadow-xl ${colorClasses.glow} ${isLocked
+                  ? "opacity-60 border-border/30"
+                  : colorClasses.border
+                  }`}
                 onClick={handleClick}
               >
                 {/* Background Gradient */}
                 <div className={`absolute inset-0 opacity-30 bg-gradient-to-br ${colorClasses.bg} to-transparent pointer-events-none`} />
-                
+
                 <CardContent className="relative p-5 md:p-6">
                   {/* Header with Icon and Status */}
                   <div className="flex items-start justify-between gap-3 mb-4">
                     <div className={`h-12 w-12 md:h-14 md:w-14 rounded-2xl ${colorClasses.bg} flex items-center justify-center flex-shrink-0`}>
                       <Icon className={`h-6 w-6 md:h-7 md:w-7 ${colorClasses.text}`} />
                     </div>
-                    
+
                     {/* Status Badge - now in flex layout instead of absolute */}
                     <div className="flex-shrink-0">
                       {isComplete && (
@@ -598,7 +604,7 @@ export default function DashboardCertification() {
                     if (cert.slug === 'ai-founders-certificate') {
                       return (
                         <Collapsible className="mb-4">
-                          <CollapsibleTrigger 
+                          <CollapsibleTrigger
                             className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground w-full py-2 border-t border-border/30 transition-colors"
                             onClick={(e) => e.stopPropagation()}
                           >
@@ -624,16 +630,16 @@ export default function DashboardCertification() {
                         </Collapsible>
                       );
                     }
-                    
+
                     // For other certificates, show lesson preview
                     const certId = certifications.find(c => c.slug === cert.slug)?.id;
                     const certLessons = certId ? lessonPreviews[certId] || [] : [];
-                    
+
                     if (certLessons.length === 0 && !previewsLoading) return null;
-                    
+
                     return (
                       <Collapsible className="mb-4">
-                        <CollapsibleTrigger 
+                        <CollapsibleTrigger
                           className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground w-full py-2 border-t border-border/30 transition-colors"
                           onClick={(e) => e.stopPropagation()}
                         >
@@ -666,9 +672,9 @@ export default function DashboardCertification() {
                   {/* Progress bar if in progress */}
                   {isInProgress && certProgress && (
                     <div className="mb-4">
-                      <Progress 
-                        value={(certProgress.completedLessons / (certifications.find(c => c.slug === cert.slug)?.lessons_count || 1)) * 100} 
-                        className="h-1.5" 
+                      <Progress
+                        value={(certProgress.completedLessons / (certifications.find(c => c.slug === cert.slug)?.lessons_count || 1)) * 100}
+                        className="h-1.5"
                       />
                       <p className="text-xs text-muted-foreground mt-1">
                         {certProgress.completedLessons} lessons complete
@@ -677,8 +683,8 @@ export default function DashboardCertification() {
                   )}
 
                   {/* CTA */}
-                  <Button 
-                    variant={isLocked ? "outline" : "default"} 
+                  <Button
+                    variant={isLocked ? "outline" : "default"}
                     className={`w-full gap-2 ${!isLocked ? 'bg-gradient-to-r from-primary to-primary/80' : ''}`}
                     disabled={isLocked}
                   >
@@ -738,7 +744,7 @@ export default function DashboardCertification() {
         <Card className="border-muted bg-muted/30">
           <CardContent className="p-4 text-center">
             <p className="text-sm text-muted-foreground">
-              Each certificate is <strong>independent</strong> — pick whichever fits your goals. 
+              Each certificate is <strong>independent</strong> — pick whichever fits your goals.
               All certificates are <strong>LinkedIn-shareable</strong> and prove your AI skills to the world.
             </p>
           </CardContent>
