@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { useStudent } from "@/hooks/useStudent";
 import { useMission } from "@/hooks/useMission";
+import { useCertification } from "@/hooks/useCertification";
 import { useSkills } from "@/hooks/useSkills";
 import { useTank } from "@/hooks/useTank";
 import { useCertificationProgress } from "@/hooks/useCertificationProgress";
@@ -87,15 +88,31 @@ export default function Dashboard() {
   // Get last pitch score if available
   const lastPitchScore = pitchAttempts?.[0]?.score;
 
-  // Certification status - use AI Foundations cert ID
-  // ID for: Prompt Engineering Fundamentals (AI Foundations)
-  const AI_FOUNDATIONS_ID = "761a157d-a1e0-4423-99b8-a58f5ddad129";
-  const aiFoundationsProgress = getProgress(AI_FOUNDATIONS_ID);
+  // Certification status - find the first enrolled or most relevant certification
+  const { certifications } = useCertification();
 
-  const isEnrolled = aiFoundationsProgress?.isEnrolled || false;
-  const isCompleted = aiFoundationsProgress?.isCompleted || false;
-  const lessonsCompleted = aiFoundationsProgress?.completedLessons || 0;
-  const totalLessons = 10; // AI Foundations has 10 lessons mapped in certification_lessons
+  // Find a certification to display: 
+  // 1. First enrolled but not completed
+  // 2. First completed
+  // 3. First available (AI Foundations)
+  const certificationsProgress = certifications.map(cert => ({
+    cert,
+    progress: getProgress(cert.id)
+  }));
+
+  const activeCertProgress = certificationsProgress.find(cp => cp.progress.isEnrolled && !cp.progress.isCompleted) ||
+    certificationsProgress.find(cp => cp.progress.isCompleted) ||
+    certificationsProgress[0];
+
+  const currentCert = activeCertProgress?.cert;
+  const progress = activeCertProgress?.progress;
+
+  const isEnrolled = progress?.isEnrolled || false;
+  const isCompleted = progress?.isCompleted || false;
+  const lessonsCompleted = progress?.completedLessons || 0;
+  const totalLessons = currentCert?.lessons_count || 10;
+  const certName = currentCert?.name || "AI Foundations Certificate";
+  const certSlug = currentCert?.slug || "prompt-engineering-fundamentals";
 
   // Get tier display name
   const getTierBadge = () => {
@@ -114,7 +131,7 @@ export default function Dashboard() {
   const showSkills = totalPoints > 0;
 
   return (
-    <DashboardLayout currentWeek={currentWeek} totalWeeks={totalWeeks}>
+    <DashboardLayout>
       <div className="space-y-6">
         {/* Simplified Hero Welcome */}
         <HeroWelcome
@@ -130,6 +147,7 @@ export default function Dashboard() {
           totalLessons={totalLessons}
           currentMission={currentMission}
           completedCount={completedCount}
+          certSlug={certSlug}
         />
 
         {/* Daily Sprint Challenge - Engagement driver */}
@@ -146,6 +164,8 @@ export default function Dashboard() {
             totalLessons={totalLessons}
             isEnrolled={isEnrolled}
             isCompleted={isCompleted}
+            certificationName={certName}
+            certificationSlug={certSlug}
           />
 
           {/* THE TANK - Show from Week 2+ or if has XP */}

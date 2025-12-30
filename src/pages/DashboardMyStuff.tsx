@@ -6,10 +6,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-  Backpack, 
-  Lightbulb, 
-  Trophy, 
+import {
+  Backpack,
+  Lightbulb,
+  Trophy,
   Wrench,
   Star,
   ExternalLink,
@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { useAIToolbox } from "@/hooks/useAIToolbox";
 import { useCaseStudies } from "@/hooks/useCaseStudies";
+import { useStudentStuff } from "@/hooks/useStudentStuff";
 import { useToast } from "@/hooks/use-toast";
 
 // Simplified resources list
@@ -37,7 +38,7 @@ export default function DashboardMyStuff() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("prompts");
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  
+
   const {
     prompts,
     favorites,
@@ -45,6 +46,7 @@ export default function DashboardMyStuff() {
     toggleFavorite,
   } = useAIToolbox();
 
+  const { projects, loading: projectsLoading } = useStudentStuff();
   const { data: caseStudies = [], isLoading: showcaseLoading } = useCaseStudies({ depth: "quick" });
 
   const handleCopyPrompt = async (prompt: string, id: string) => {
@@ -125,7 +127,7 @@ export default function DashboardMyStuff() {
                                   {prompt.description}
                                 </p>
                               </div>
-                              <button 
+                              <button
                                 onClick={() => toggleFavorite(prompt.id)}
                                 className="text-amber-500 hover:text-amber-400"
                               >
@@ -133,14 +135,14 @@ export default function DashboardMyStuff() {
                               </button>
                             </div>
                             <div className="flex gap-2">
-                              <Button 
-                                size="sm" 
+                              <Button
+                                size="sm"
                                 variant="outline"
                                 onClick={() => handleCopyPrompt(prompt.prompt_template, prompt.id)}
                               >
                                 {copiedId === prompt.id ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                               </Button>
-                              <Button 
+                              <Button
                                 size="sm"
                                 onClick={() => handleUsePrompt(prompt.prompt_template)}
                               >
@@ -172,15 +174,15 @@ export default function DashboardMyStuff() {
                                 {prompt.description}
                               </p>
                             </div>
-                            <button 
+                            <button
                               onClick={() => toggleFavorite(prompt.id)}
                               className="text-muted-foreground hover:text-amber-500"
                             >
                               <Star className="h-4 w-4" />
                             </button>
                           </div>
-                          <Button 
-                            size="sm" 
+                          <Button
+                            size="sm"
                             variant="ghost"
                             className="w-full text-xs"
                             onClick={() => handleUsePrompt(prompt.prompt_template)}
@@ -203,13 +205,58 @@ export default function DashboardMyStuff() {
 
           {/* My Projects Tab */}
           <TabsContent value="projects" className="mt-6 space-y-6">
-            {showcaseLoading ? (
+            {projectsLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-40 rounded-xl" />)}
+                {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-32 rounded-xl" />)}
+              </div>
+            ) : projects.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {projects.map((project) => (
+                  <Card key={project.id} className="hover:border-primary/30 transition-colors cursor-pointer group" onClick={() => {
+                    if (project.type === 'certification') {
+                      navigate(`/dashboard/certification/${project.slug}`);
+                    }
+                  }}>
+                    <CardContent className="p-4 flex items-center gap-4">
+                      <div className="h-16 w-16 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center text-3xl shrink-0 overflow-hidden">
+                        {project.thumbnail_url ? (
+                          <img src={project.thumbnail_url} alt={project.title} className="w-full h-full object-cover" />
+                        ) : project.metadata?.icon ? (
+                          project.metadata.icon
+                        ) : (
+                          project.type === 'certification' ? "🎓" : "🛠️"
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-bold truncate">{project.title}</h3>
+                          {project.type === 'certification' && (
+                            <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 text-[10px]">CERTIFIED</Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground">{project.subtitle}</p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {new Date(project.date).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+                    </CardContent>
+                  </Card>
+                ))}
+
+                {/* Add New Project CTA */}
+                <Card className="border-dashed border-2 hover:border-primary/50 transition-colors cursor-pointer flex items-center justify-center p-6" onClick={() => navigate("/dashboard/certification")}>
+                  <div className="text-center">
+                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-2">
+                      <Rocket className="h-5 w-5 text-primary" />
+                    </div>
+                    <p className="font-medium text-sm text-primary">Build something new</p>
+                  </div>
+                </Card>
               </div>
             ) : (
               <>
-                {/* Your Projects */}
+                {/* Your Projects Empty State */}
                 <Card className="border-dashed border-2 border-primary/30">
                   <CardContent className="p-8 text-center">
                     <Rocket className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
@@ -222,44 +269,44 @@ export default function DashboardMyStuff() {
                     </Button>
                   </CardContent>
                 </Card>
-
-                {/* Inspiration from others */}
-                {caseStudies.length > 0 && (
-                  <section>
-                    <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                      <Trophy className="h-5 w-5 text-amber-500" />
-                      Get Inspired
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {caseStudies.slice(0, 4).map((project) => (
-                        <Card key={project.id} className="hover:border-primary/30 transition-colors">
-                          <CardContent className="p-4">
-                            <div className="flex items-start gap-3">
-                              <div className="text-3xl">{project.thumbnail_url || "🚀"}</div>
-                              <div className="flex-1">
-                                <h3 className="font-medium">{project.title}</h3>
-                                <p className="text-sm text-muted-foreground">
-                                  by {project.student_name}, {project.student_age}
-                                </p>
-                                {project.outcome && (
-                                  <Badge variant="outline" className="mt-2 text-xs">
-                                    {project.outcome}
-                                  </Badge>
-                                )}
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                    <div className="mt-4 text-center">
-                      <Button variant="outline" onClick={() => navigate("/dashboard/showcase")}>
-                        See All Stories
-                      </Button>
-                    </div>
-                  </section>
-                )}
               </>
+            )}
+
+            {/* Inspiration from others */}
+            {caseStudies.length > 0 && (
+              <section>
+                <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                  <Trophy className="h-5 w-5 text-amber-500" />
+                  Get Inspired
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {caseStudies.slice(0, 4).map((project) => (
+                    <Card key={project.id} className="hover:border-primary/30 transition-colors">
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="text-3xl">{project.thumbnail_url || "🚀"}</div>
+                          <div className="flex-1">
+                            <h3 className="font-medium">{project.title}</h3>
+                            <p className="text-sm text-muted-foreground">
+                              by {project.student_name}, {project.student_age}
+                            </p>
+                            {project.outcome && (
+                              <Badge variant="outline" className="mt-2 text-xs">
+                                {project.outcome}
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+                <div className="mt-4 text-center">
+                  <Button variant="outline" onClick={() => navigate("/dashboard/showcase")}>
+                    See All Stories
+                  </Button>
+                </div>
+              </section>
             )}
           </TabsContent>
 
@@ -272,8 +319,8 @@ export default function DashboardMyStuff() {
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {quickResources.map((resource) => (
-                  <Card 
-                    key={resource.title} 
+                  <Card
+                    key={resource.title}
                     className="hover:border-primary/30 transition-colors cursor-pointer"
                     onClick={() => window.open(resource.url, "_blank")}
                   >
@@ -301,6 +348,6 @@ export default function DashboardMyStuff() {
           </TabsContent>
         </Tabs>
       </div>
-    </DashboardLayout>
+    </DashboardLayout >
   );
 }

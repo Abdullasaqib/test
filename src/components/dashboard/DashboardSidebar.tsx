@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useStudentPricingTier } from "@/hooks/useStudentPricingTier";
 import { useSprints } from "@/hooks/useSprints";
+import { useMission } from "@/hooks/useMission";
 import { ProgressRing } from "./ProgressRing";
 import { CursorWordmark } from "@/components/ui/cursor-wordmark";
 import {
@@ -43,27 +44,33 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 interface DashboardSidebarProps {
-  currentWeek?: number;
-  totalWeeks?: number;
 }
 
-export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: DashboardSidebarProps) {
+export function DashboardSidebar({ }: DashboardSidebarProps) {
   const location = useLocation();
   const { signOut, user } = useAuth();
   const { state } = useSidebar();
-  const { canAccess, tier } = useStudentPricingTier();
+  const { canAccess, tier, isLoading: isTierLoading } = useStudentPricingTier();
   const { streak } = useSprints();
+  const { currentMission, isLoading: isLoadingMission } = useMission();
+
+  // Use a sensible default only if not loading, otherwise null to trigger skeleton/loading state
+  const currentWeek = currentMission?.week;
+  const totalWeeks = 12;
   const collapsed = state === "collapsed";
 
   // Extract week from URL if present (real-time update)
   const weekMatch = location.pathname.match(/\/week\/(\d+)/);
-  const displayWeek = weekMatch ? parseInt(weekMatch[1]) : currentWeek;
+  const displayWeek = weekMatch ? parseInt(weekMatch[1]) : (currentWeek || 1);
 
-  const progress = Math.round((displayWeek / totalWeeks) * 100);
+  // Don't calculate progress if we're still loading the mission data to avoid 8% flicker
+  // Default to 0 or hidden if loading
+  const progress = currentWeek ? Math.round((displayWeek / totalWeeks) * 100) : 0;
 
   // Certificate access based on tier
-  const hasAIBuilder = canAccess('curriculum_access') && tier?.features?.curriculum_access === 'full';
-  const hasAILauncher = canAccess('live_classes');
+  // Optimistically assume true while loading to prevent lock flicker
+  const hasAIBuilder = isTierLoading ? true : (canAccess('curriculum_access') && tier?.features?.curriculum_access === 'full');
+  const hasAILauncher = isTierLoading ? false : canAccess('live_classes');
 
   // Check if user is on any certificate-related route
   const isCertificateActive = location.pathname.includes('/dashboard/certification') ||
@@ -103,21 +110,31 @@ export function DashboardSidebar({ currentWeek = 1, totalWeeks = 12 }: Dashboard
         {/* Progress Section */}
         {!collapsed && (
           <div className="px-4 py-4 border-b border-sidebar-border">
-            <div className="flex items-center gap-4">
-              <ProgressRing progress={progress} size={56} strokeWidth={5}>
-                <span className="text-xs font-semibold text-sidebar-foreground">
-                  {progress}%
-                </span>
-              </ProgressRing>
-              <div>
-                <p className="text-sm font-medium text-sidebar-foreground">
-                  Week {displayWeek} of {totalWeeks}
-                </p>
-                <p className="text-xs text-sidebar-foreground/60">
-                  Keep going!
-                </p>
+            {isLoadingMission ? (
+              <div className="flex items-center gap-4 animate-pulse">
+                <div className="w-14 h-14 rounded-full bg-sidebar-accent/50" />
+                <div className="space-y-2">
+                  <div className="h-4 w-24 bg-sidebar-accent/50 rounded" />
+                  <div className="h-3 w-16 bg-sidebar-accent/50 rounded" />
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex items-center gap-4">
+                <ProgressRing progress={progress} size={56} strokeWidth={5}>
+                  <span className="text-xs font-semibold text-sidebar-foreground">
+                    {progress}%
+                  </span>
+                </ProgressRing>
+                <div>
+                  <p className="text-sm font-medium text-sidebar-foreground">
+                    Week {displayWeek} of {totalWeeks}
+                  </p>
+                  <p className="text-xs text-sidebar-foreground/60">
+                    Keep going!
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         )}
 

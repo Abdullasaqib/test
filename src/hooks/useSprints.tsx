@@ -133,7 +133,7 @@ export interface SprintAccess {
 }
 
 export function useSprints() {
-  const { student } = useStudent();
+  const { student, loading: studentLoading } = useStudent();
   const { tier, isLoading: tierLoading } = useStudentPricingTier();
   const { isDemoMode } = useDemoMode();
   const [loading, setLoading] = useState(!isDemoMode);
@@ -158,7 +158,7 @@ export function useSprints() {
     const isUnlimited = sprintDaily === -1;
     const monthlyLimit = isUnlimited ? Infinity : sprintDaily;
     const sprintsRemaining = isUnlimited ? Infinity : Math.max(0, monthlyLimit - monthlyAttemptCount);
-    
+
     return {
       hasAccess: sprintDaily !== 0,
       isUnlimited,
@@ -177,7 +177,7 @@ export function useSprints() {
         .order('display_order');
 
       if (error) throw error;
-      
+
       // Map database columns to our interface, ensuring skill_focus_areas is always an array
       const mappedTracks: IndustryTrack[] = (data || []).map(t => ({
         id: t.id,
@@ -224,7 +224,7 @@ export function useSprints() {
         .eq('student_id', student.id);
 
       if (error) throw error;
-      
+
       // Map database columns to our interface
       const mappedProgress: TrackProgress[] = (data || []).map(p => ({
         track_id: p.track_id,
@@ -280,7 +280,7 @@ export function useSprints() {
     try {
       const now = new Date();
       const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-      
+
       const { count, error } = await supabase
         .from('challenge_attempts')
         .select('*', { count: 'exact', head: true })
@@ -314,7 +314,7 @@ export function useSprints() {
           .select('*, track:industry_tracks(*)')
           .eq('id', todayAttempts[0].challenge_id)
           .single();
-        
+
         if (completedChallenge) {
           setDailyChallenge(completedChallenge as unknown as Challenge);
         }
@@ -430,7 +430,7 @@ export function useSprints() {
     try {
       // Get recent challenge IDs to exclude
       const recentIds = recentAttempts.map(a => a.challenge_id);
-      
+
       // Build query for active challenges, excluding recent ones
       let query = supabase
         .from('challenges')
@@ -471,7 +471,7 @@ export function useSprints() {
         setBonusChallenge(challenge);
         return challenge;
       }
-      
+
       return null;
     } catch (error) {
       console.error('Error fetching bonus challenge:', error);
@@ -599,33 +599,34 @@ export function useSprints() {
 
   useEffect(() => {
     if (isDemoMode) return;
-    
+
     const loadData = async () => {
       setLoading(true);
-      await Promise.all([
-        fetchStudentTrackInterests(),
-        fetchTrackProgress(),
-        fetchStreak(),
-        fetchRecentAttempts(),
-        fetchMonthlyAttemptCount(),
-      ]);
-      setLoading(false);
+      try {
+        await Promise.all([
+          fetchDailyChallenge(),
+          fetchBonusChallenge(),
+          fetchStreak(),
+          fetchRecentAttempts(),
+          fetchMonthlyAttemptCount(),
+          fetchStudentTrackInterests(),
+          fetchTrackProgress()
+        ]);
+      } catch (err) {
+        console.error("Error loading sprint data:", err);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    if (student && !tierLoading) {
-      loadData();
-    } else if (!student && !tierLoading) {
-      setLoading(false);
+    if (!studentLoading && !tierLoading) {
+      if (student) {
+        loadData();
+      } else {
+        setLoading(false);
+      }
     }
-  }, [student, tierLoading, isDemoMode, fetchStudentTrackInterests, fetchTrackProgress, fetchStreak, fetchRecentAttempts, fetchMonthlyAttemptCount]);
-
-  // Fetch daily challenge immediately - no track gate required
-  useEffect(() => {
-    if (isDemoMode) return;
-    if (student && !tierLoading) {
-      fetchDailyChallenge();
-    }
-  }, [student, tierLoading, isDemoMode, fetchDailyChallenge]);
+  }, [student, studentLoading, tierLoading, isDemoMode]);
 
   return {
     loading,

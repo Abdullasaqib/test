@@ -7,6 +7,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+import { checkRateLimit } from "../_shared/security.ts";
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -17,6 +19,21 @@ serve(async (req) => {
 
     if (!challengeId || !studentId || !response) {
       throw new Error('Missing required fields: challengeId, studentId, response');
+    }
+
+    // Rate limiting: 5 requests per minute per student
+    const rateLimitKey = `sprint_eval_${studentId}`;
+    const rateLimit = checkRateLimit(rateLimitKey, 5, 60000);
+
+    if (!rateLimit.allowed) {
+      const resetIn = Math.ceil((rateLimit.resetAt - Date.now()) / 1000);
+      return new Response(
+        JSON.stringify({
+          error: `Rate limit exceeded. Please wait ${resetIn} seconds.`,
+          message: `You're improved very fast! Please wait ${resetIn}s before next submission.`
+        }),
+        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -42,12 +59,12 @@ serve(async (req) => {
     const isMultipleChoice = challenge.response_type === 'multiple_choice';
     let selectedOption = '';
     let reasoning = response;
-    
+
     if (isMultipleChoice) {
       // Parse the MC response format: "Selected: A - Option text\nReasoning: ..."
       const selectedMatch = response.match(/^Selected:\s*([A-D])\s*-\s*(.+?)(?:\n|$)/);
       const reasoningMatch = response.match(/Reasoning:\s*(.+)$/s);
-      
+
       if (selectedMatch) {
         selectedOption = selectedMatch[1];
         console.log('Selected option:', selectedOption);
@@ -74,10 +91,10 @@ Evaluate their response considering whether they demonstrated appropriate ${chal
 
     // Use Lovable AI to evaluate the response
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    
+
     // Build evaluation prompt based on response type
     let evaluationPrompt: string;
-    
+
     // Build the structured feedback instruction
     const feedbackInstruction = `
 IMPORTANT: Provide STRUCTURED feedback in this format:
@@ -97,10 +114,10 @@ Examples of BAD feedback (too generic):
 
     if (isMultipleChoice) {
       const options = challenge.response_options?.options || [];
-      const optionsText = options.map((opt: { id: string; text: string }) => 
+      const optionsText = options.map((opt: { id: string; text: string }) =>
         `${opt.id}: ${opt.text}`
       ).join('\n');
-      
+
       evaluationPrompt = `You are an expert mentor evaluating a young founder's multiple-choice response to a business challenge.
 
 CHALLENGE:
@@ -203,34 +220,34 @@ Be encouraging but honest. A score of 70+ means they addressed most criteria. 85
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
       console.error('AI API error:', aiResponse.status, errorText);
-      
+
       if (aiResponse.status === 429) {
         return new Response(
-          JSON.stringify({ 
+          JSON.stringify({
             error: 'rate_limit',
             message: 'Our AI mentor is busy! Please wait a moment and try again.',
-            retryAfter: true 
+            retryAfter: true
           }),
           { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
-      
+
       if (aiResponse.status === 402) {
         return new Response(
-          JSON.stringify({ 
+          JSON.stringify({
             error: 'credits_depleted',
             message: 'AI evaluation is temporarily unavailable. Please try again later.'
           }),
           { status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
-      
+
       throw new Error('Failed to evaluate response with AI');
     }
 
     const aiData = await aiResponse.json();
     const aiContent = aiData.choices[0].message.content;
-    
+
     console.log('AI evaluation:', aiContent);
 
     // Parse the AI response
@@ -255,13 +272,13 @@ Be encouraging but honest. A score of 70+ means they addressed most criteria. 85
         archetype: "innovator"
       };
     }
-    
+
     // Ensure archetype has a valid value
     const validArchetypes = ['strategist', 'innovator', 'pragmatist', 'disruptor', 'collaborator', 'visionary'];
     if (!evaluation.archetype || !validArchetypes.includes(evaluation.archetype)) {
       evaluation.archetype = 'innovator';
     }
-    
+
     // Build structured feedback object
     const structuredFeedback = {
       praise: evaluation.praise || evaluation.feedback || "Great effort!",
@@ -300,7 +317,7 @@ Be encouraging but honest. A score of 70+ means they addressed most criteria. 85
     console.log('Updating skill scores for:', evaluation.skills_demonstrated);
     for (const skill of evaluation.skills_demonstrated || []) {
       const skillPoints = Math.round(xpEarned / (evaluation.skills_demonstrated?.length || 1));
-      
+
       // Check if skill score exists
       const { data: existingSkill } = await supabase
         .from('skill_scores')
@@ -308,7 +325,7 @@ Be encouraging but honest. A score of 70+ means they addressed most criteria. 85
         .eq('student_id', studentId)
         .eq('skill', skill)
         .single();
-      
+
       if (existingSkill) {
         await supabase
           .from('skill_scores')
@@ -339,12 +356,12 @@ Be encouraging but honest. A score of 70+ means they addressed most criteria. 85
         .select('*')
         .eq('student_id', studentId)
         .single();
-      
+
       if (existingProfile) {
         // Update archetype counts (stored as JSON in signature_strengths)
         const archetypeCounts = (existingProfile.signature_strengths as Record<string, number>) || {};
         archetypeCounts[evaluation.archetype] = (archetypeCounts[evaluation.archetype] || 0) + 1;
-        
+
         // Find dominant archetype
         let dominantArchetype = evaluation.archetype;
         let maxCount = 0;
@@ -354,7 +371,7 @@ Be encouraging but honest. A score of 70+ means they addressed most criteria. 85
             dominantArchetype = arch;
           }
         }
-        
+
         await supabase
           .from('strength_profiles')
           .update({
@@ -377,7 +394,7 @@ Be encouraging but honest. A score of 70+ means they addressed most criteria. 85
 
     // Update streak
     const today = new Date().toISOString().split('T')[0];
-    
+
     const { data: existingStreak } = await supabase
       .from('student_streaks')
       .select('*')
@@ -387,12 +404,12 @@ Be encouraging but honest. A score of 70+ means they addressed most criteria. 85
     if (existingStreak) {
       const lastDate = existingStreak.last_challenge_date;
       let newStreak = existingStreak.current_streak;
-      
+
       if (lastDate) {
         const lastDateObj = new Date(lastDate);
         const todayObj = new Date(today);
         const diffDays = Math.floor((todayObj.getTime() - lastDateObj.getTime()) / (1000 * 60 * 60 * 24));
-        
+
         if (diffDays === 0) {
           // Same day, streak stays the same
         } else if (diffDays === 1) {

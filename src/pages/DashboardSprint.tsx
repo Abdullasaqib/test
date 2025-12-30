@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
-import { 
-  Flame, Zap, Clock, CheckCircle2, Trophy, 
+import {
+  Flame, Zap, Clock, CheckCircle2, Trophy,
   Sparkles, Target, Brain, Send,
   Lock, ArrowUpRight, ChevronRight, TrendingUp,
   Compass, ThumbsUp, ThumbsDown, Calendar, RotateCcw, Eye, BarChart3
@@ -39,14 +39,14 @@ export default function DashboardSprint() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const isBonusMode = searchParams.get('bonus') === 'true';
-  
-  const { 
-    loading, dailyChallenge, bonusChallenge, todayCompleted, streak, 
+
+  const {
+    loading, dailyChallenge, bonusChallenge, todayCompleted, streak,
     recentAttempts, submitting, submitResponse, sprintAccess,
     industryTracks, studentTrackInterests, hasSelectedTracks,
     saveTrackInterests, trackProgress, fetchBonusChallenge
   } = useSprints();
-  
+
   const [response, setResponse] = useState("");
   const [viewState, setViewState] = useState<ViewState>('challenge');
   const [result, setResult] = useState<{
@@ -65,11 +65,11 @@ export default function DashboardSprint() {
   const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
   const [showTrackDiscovery, setShowTrackDiscovery] = useState(false);
   const [currentBonusChallenge, setCurrentBonusChallenge] = useState<Challenge | null>(null);
-  
+
   // Multiple-choice state
   const [selectedMCOption, setSelectedMCOption] = useState<string | null>(null);
   const [mcReasoning, setMcReasoning] = useState("");
-  
+
   // Unified active challenge - this is what we render
   const activeChallenge = isBonusMode ? currentBonusChallenge : dailyChallenge;
 
@@ -121,7 +121,7 @@ export default function DashboardSprint() {
           parsedFeedback = latestAttempt.ai_feedback;
         }
       }
-      
+
       setResult({
         score: latestAttempt.score || 0,
         feedback: parsedFeedback || '',
@@ -157,7 +157,7 @@ export default function DashboardSprint() {
 
   const handleSubmit = async () => {
     if (!activeChallenge) return;
-    
+
     // Validate based on response type
     if (isMultipleChoice) {
       if (!selectedMCOption || mcReasoning.trim().length < 20) return;
@@ -166,39 +166,39 @@ export default function DashboardSprint() {
     }
 
     setViewState('submitting');
-    
+
     const timeSpent = startTime ? Math.floor((Date.now() - startTime) / 1000) : undefined;
-    
+
     // Build the response string based on type
     let finalResponse = response;
     if (isMultipleChoice) {
       const selectedOption = mcOptions.find((opt: { id: string }) => opt.id === selectedMCOption);
       finalResponse = `Selected: ${selectedMCOption} - ${selectedOption?.text || ''}\nReasoning: ${mcReasoning}`;
     }
-    
+
     const evaluation = await submitResponse(activeChallenge.id, finalResponse, timeSpent, isBonusMode);
-    
+
     if (evaluation) {
       // Parse feedback if it's a string
-      let parsedFeedback = evaluation.feedback;
-      if (typeof evaluation.feedback === 'string') {
+      let parsedFeedback = evaluation.attempt.feedback;
+      if (typeof evaluation.attempt.feedback === 'string') {
         try {
-          parsedFeedback = JSON.parse(evaluation.feedback);
+          parsedFeedback = JSON.parse(evaluation.attempt.feedback);
         } catch {
-          parsedFeedback = evaluation.feedback;
+          parsedFeedback = evaluation.attempt.feedback;
         }
       }
-      
+
       setResult({
-        score: evaluation.score || 0,
+        score: evaluation.attempt.score || 0,
         feedback: parsedFeedback || '',
-        skills_awarded: evaluation.skills_awarded || [],
-        xp_earned: evaluation.xp_earned || 0,
-        archetype: evaluation.archetype,
+        skills_awarded: evaluation.attempt.skills_awarded || [],
+        xp_earned: evaluation.attempt.xp_earned || 0,
+        archetype: evaluation.attempt.archetype,
         baseXP: activeChallenge.xp_reward,
-        roleFeedback: evaluation.roleFeedback,
+        roleFeedback: evaluation.attempt.roleFeedback,
       });
-      
+
       // Show celebration overlay first
       setShowCelebration(true);
     } else {
@@ -207,11 +207,11 @@ export default function DashboardSprint() {
       toast.error('Failed to evaluate response. Please try again.');
     }
   };
-  
+
   const handleCelebrationComplete = () => {
     setShowCelebration(false);
     setViewState('result');
-    
+
     // Show track discovery if user hasn't selected this track yet (not for bonus mode)
     if (!isBonusMode && activeChallenge?.industry_track_id && !studentTrackInterests.includes(activeChallenge.industry_track_id)) {
       setShowTrackDiscovery(true);
@@ -277,10 +277,10 @@ export default function DashboardSprint() {
           </div>
           <h1 className="text-3xl font-bold mb-4">Daily Sprint Challenges</h1>
           <p className="text-lg text-muted-foreground mb-8">
-            Build your founder instincts with AI-evaluated daily challenges. 
+            Build your founder instincts with AI-evaluated daily challenges.
             Practice real-world decision making and earn XP!
           </p>
-          <Button 
+          <Button
             onClick={() => navigate('/pricing')}
             size="lg"
             className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600"
@@ -308,7 +308,7 @@ export default function DashboardSprint() {
           <p className="text-muted-foreground mb-8">
             Upgrade to FULL FOUNDATION for unlimited daily sprints.
           </p>
-          <Button 
+          <Button
             onClick={() => navigate('/pricing')}
             size="lg"
             className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600"
@@ -323,10 +323,10 @@ export default function DashboardSprint() {
 
   // Get today's date formatted
   const getTodayFormatted = () => {
-    return new Date().toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      month: 'long', 
-      day: 'numeric' 
+    return new Date().toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric'
     });
   };
 
@@ -347,9 +347,9 @@ export default function DashboardSprint() {
                 Founder Simulation
               </h1>
               {/* Explore Tracks Button - Optional */}
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setViewState('explore-tracks')}
                 className="text-muted-foreground hover:text-foreground"
               >
@@ -362,7 +362,7 @@ export default function DashboardSprint() {
               <span className="text-sm">{getTodayFormatted()}</span>
             </div>
           </div>
-          
+
           <Card className="bg-gradient-to-r from-orange-500/10 to-amber-500/10 border-orange-500/20">
             <CardContent className="p-4 flex items-center gap-4">
               {!sprintAccess.isUnlimited && (
@@ -405,8 +405,8 @@ export default function DashboardSprint() {
               exit={{ opacity: 0, y: -20 }}
             >
               <div className="mb-4">
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   onClick={() => setViewState('challenge')}
                   className="text-muted-foreground"
                 >
@@ -422,7 +422,7 @@ export default function DashboardSprint() {
                     onToggleTrack={(trackId) => {
                       setSelectedTracks(prev => {
                         const current = prev.length > 0 ? prev : studentTrackInterests;
-                        return current.includes(trackId) 
+                        return current.includes(trackId)
                           ? current.filter(id => id !== trackId)
                           : [...current, trackId];
                       });
@@ -446,7 +446,7 @@ export default function DashboardSprint() {
             >
               <Card className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/20">
                 <CardContent className="p-8 text-center">
-                  <motion.div 
+                  <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", bounce: 0.5 }}
@@ -481,7 +481,7 @@ export default function DashboardSprint() {
                   </Badge>
                 </div>
               )}
-              
+
               <Card>
                 <CardHeader>
                   <div className="flex items-center justify-between flex-wrap gap-2">
@@ -504,7 +504,7 @@ export default function DashboardSprint() {
                         <Clock className="h-3 w-3" />
                         {activeChallenge.estimated_minutes} min
                       </Badge>
-                      <motion.div 
+                      <motion.div
                         className="flex items-center gap-2 text-sm bg-muted/50 px-3 py-1 rounded-full"
                         animate={{ scale: elapsedSeconds > 0 && elapsedSeconds % 60 === 0 ? [1, 1.1, 1] : 1 }}
                       >
@@ -524,7 +524,7 @@ export default function DashboardSprint() {
                   {/* Scenario with Identity Hook */}
                   <div className="bg-muted/50 rounded-lg p-4">
                     <p className="text-sm text-orange-400 font-medium mb-2">
-                      {activeChallenge.role_type 
+                      {activeChallenge.role_type
                         ? `You're the ${activeChallenge.role_metadata?.role_title || activeChallenge.role_type}. Here's your situation:`
                         : "You're the founder. Here's your situation:"}
                     </p>
@@ -535,7 +535,7 @@ export default function DashboardSprint() {
 
                   {/* Real World Context - Expanded by default */}
                   {activeChallenge.real_world_context && (
-                    <RealWorldContext 
+                    <RealWorldContext
                       context={activeChallenge.real_world_context}
                       trackIcon={activeChallenge.track?.icon}
                       trackName={activeChallenge.track?.name}
@@ -582,9 +582,9 @@ export default function DashboardSprint() {
                     </div>
                   )}
 
-                  <Button 
+                  <Button
                     onClick={handleSubmit}
-                    disabled={isMultipleChoice 
+                    disabled={isMultipleChoice
                       ? (!selectedMCOption || mcReasoning.trim().length < 20)
                       : response.trim().length < 20
                     }
@@ -600,7 +600,7 @@ export default function DashboardSprint() {
                       Write at least 20 characters to submit
                     </p>
                   )}
-                  
+
                   {isMultipleChoice && selectedMCOption && mcReasoning.trim().length < 20 && mcReasoning.length > 0 && (
                     <p className="text-xs text-muted-foreground text-center">
                       Explain your choice in at least 20 characters
@@ -641,7 +641,7 @@ export default function DashboardSprint() {
             >
               <Card>
                 <CardContent className="p-12 text-center">
-                  <motion.div 
+                  <motion.div
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
                     className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4"
@@ -678,9 +678,9 @@ export default function DashboardSprint() {
                   {/* Decorative elements */}
                   <div className="absolute top-0 left-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-3xl" />
                   <div className="absolute bottom-0 right-0 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl" />
-                  
+
                   {/* Score circle */}
-                  <motion.div 
+                  <motion.div
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: "spring", bounce: 0.5 }}
@@ -689,24 +689,24 @@ export default function DashboardSprint() {
                     <span className="text-5xl font-bold">{result.score}</span>
                     <span className="absolute -bottom-1 text-xs text-muted-foreground">/100</span>
                   </motion.div>
-                  
+
                   {/* Archetype Badge - NEW */}
                   {result.archetype && (
                     <div className="mb-4">
-                      <ArchetypeBadge 
-                        archetype={result.archetype} 
-                        size="lg" 
-                        showDescription 
+                      <ArchetypeBadge
+                        archetype={result.archetype}
+                        size="lg"
+                        showDescription
                       />
                     </div>
                   )}
-                  
+
                   {/* XP Earned - With Explainer Tooltip */}
                   <div className="mb-6">
-                    <XPExplainer 
-                      xpEarned={result.xp_earned} 
-                      score={result.score} 
-                      baseXP={result.baseXP || dailyChallenge?.xp_reward || 25} 
+                    <XPExplainer
+                      xpEarned={result.xp_earned}
+                      score={result.score}
+                      baseXP={result.baseXP || dailyChallenge?.xp_reward || 25}
                     />
                   </div>
 
@@ -733,7 +733,7 @@ export default function DashboardSprint() {
                   )}
 
                   {/* Feedback Cards */}
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
@@ -750,8 +750,8 @@ export default function DashboardSprint() {
                       transition={{ delay: 0.4 }}
                       className="mb-6 max-w-md mx-auto"
                     >
-                      <RoleAchievement 
-                        roleType={activeChallenge.role_type} 
+                      <RoleAchievement
+                        roleType={activeChallenge.role_type}
                         roleFeedback={result.roleFeedback}
                         score={result.score}
                       />
@@ -760,7 +760,7 @@ export default function DashboardSprint() {
 
                   {/* Skills Level Up */}
                   {result.skills_awarded.length > 0 && (
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5 }}
@@ -772,7 +772,7 @@ export default function DashboardSprint() {
 
                   {/* Streak update */}
                   {streak && streak.current_streak > 0 && (
-                    <motion.div 
+                    <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.8, type: "spring", bounce: 0.5 }}
@@ -830,15 +830,15 @@ export default function DashboardSprint() {
                           </p>
                         </div>
                         <div className="flex gap-2">
-                          <Button 
-                            size="sm" 
+                          <Button
+                            size="sm"
                             variant="outline"
                             onClick={() => handleTrackInterest(false)}
                           >
                             <ThumbsDown className="h-4 w-4 mr-1" />
                             Not really
                           </Button>
-                          <Button 
+                          <Button
                             size="sm"
                             onClick={() => handleTrackInterest(true)}
                             className="bg-primary hover:bg-primary/90"
@@ -854,29 +854,29 @@ export default function DashboardSprint() {
               )}
 
               {/* Next Actions */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"
               >
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => setShowResponseReview(!showResponseReview)}
                   className="gap-2"
                 >
                   <Eye className="h-4 w-4" />
                   {showResponseReview ? 'Hide Response' : 'Review Response'}
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => navigate('/dashboard/sprint/tracks')}
                   className="gap-2"
                 >
                   <BarChart3 className="h-4 w-4" />
                   View My Stats
                 </Button>
-                <Button 
+                <Button
                   variant="outline"
                   onClick={async () => {
                     setResponse('');
@@ -894,7 +894,7 @@ export default function DashboardSprint() {
                   <RotateCcw className="h-4 w-4" />
                   Try Bonus Round
                 </Button>
-                <Button 
+                <Button
                   onClick={() => navigate('/dashboard')}
                   className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 gap-2"
                 >
@@ -902,7 +902,7 @@ export default function DashboardSprint() {
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </motion.div>
-              
+
               {isBonusMode && (
                 <p className="text-center text-sm text-muted-foreground">
                   🎮 Bonus Round — practice mode, no pressure!

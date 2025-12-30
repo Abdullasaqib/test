@@ -15,6 +15,7 @@ interface NextStepCardProps {
     title: string;
   } | null;
   completedCount: number;
+  certSlug?: string;
 }
 
 export function NextStepCard({
@@ -23,7 +24,8 @@ export function NextStepCard({
   lessonsCompleted,
   totalLessons,
   currentMission,
-  completedCount
+  completedCount,
+  certSlug = "prompt-engineering-fundamentals"
 }: NextStepCardProps) {
   // Determine the primary action based on state
   const getCardState = () => {
@@ -32,26 +34,26 @@ export function NextStepCard({
         title: "Start Your AI Foundations Certificate",
         subtitle: "Learn the basics of AI building in 6 short lessons",
         buttonText: "Start Learning",
-        href: "/dashboard/certification",
+        href: `/dashboard/certification/${certSlug}`,
         icon: BookOpen,
         progress: null,
         variant: "certification" as const
       };
     }
-    
+
     if (!isCompleted && lessonsCompleted < totalLessons) {
       const nextLesson = lessonsCompleted + 1;
       return {
         title: `Continue Lesson ${nextLesson} of ${totalLessons}`,
         subtitle: "Pick up where you left off",
         buttonText: "Continue Learning",
-        href: "/dashboard/certification",
+        href: `/dashboard/certification/${certSlug}`,
         icon: BookOpen,
         progress: (lessonsCompleted / totalLessons) * 100,
         variant: "certification" as const
       };
     }
-    
+
     if (isCompleted || lessonsCompleted >= totalLessons) {
       if (currentMission) {
         return {
@@ -64,7 +66,7 @@ export function NextStepCard({
           variant: "mission" as const
         };
       }
-      
+
       return {
         title: "Great work today! 🎉",
         subtitle: "You've completed today's mission. Come back tomorrow!",
@@ -80,7 +82,7 @@ export function NextStepCard({
       title: "Start Your Journey",
       subtitle: "Begin building what's NEXT_",
       buttonText: "Get Started",
-      href: "/dashboard/certification",
+      href: `/dashboard/certification/${certSlug}`,
       icon: Sparkles,
       progress: null,
       variant: "default" as const
@@ -123,7 +125,7 @@ export function NextStepCard({
           <div className={`h-12 w-12 md:h-14 md:w-14 rounded-xl flex items-center justify-center shrink-0 ${getIconColor()}`}>
             <Icon className="h-6 w-6 md:h-7 md:w-7" />
           </div>
-          
+
           <div className="flex-1 min-w-0">
             <p className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-wide mb-1">
               Your Next Step
@@ -134,7 +136,7 @@ export function NextStepCard({
             <p className="text-sm text-muted-foreground mb-3 md:mb-4 line-clamp-2">
               {cardState.subtitle}
             </p>
-            
+
             {cardState.progress !== null && (
               <div className="mb-3 md:mb-4">
                 <Progress value={cardState.progress} className="h-1.5 md:h-2" />
@@ -143,7 +145,7 @@ export function NextStepCard({
                 </p>
               </div>
             )}
-            
+
             <Button size="lg" className="font-semibold" asChild>
               <Link to={cardState.href}>
                 {cardState.buttonText}

@@ -128,7 +128,7 @@ export async function streamAIChat({
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.access_token}`, // Use authenticated session token
-        "X-Request-ID": requestId,
+        // "X-Request-ID": requestId, // Removed to prevent CORS errors on undeployed backends
       },
       body: JSON.stringify({
         messages: messageValidation.sanitized,

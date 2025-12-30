@@ -11,26 +11,26 @@ export default function Privacy() {
       />
       <div className="min-h-screen bg-background">
         <PublicHeader />
-        
+
         <main className="container mx-auto px-4 py-12 max-w-4xl">
           <Card className="border-border/50">
             <CardContent className="p-8 md:p-12">
               <h1 className="text-3xl md:text-4xl font-bold mb-2">Privacy Policy</h1>
-              <p className="text-muted-foreground mb-8">Last updated: December 7, 2024</p>
-              
+              <p className="text-muted-foreground mb-8">Last updated: December 2025</p>
+
               <div className="prose prose-invert max-w-none space-y-8">
                 <section>
                   <h2 className="text-xl font-semibold mb-4 text-foreground">1. Our Commitment to Student Privacy</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    Next Billion Lab is committed to protecting the privacy of our students, especially minors. 
-                    We comply with applicable data protection laws including COPPA (Children's Online Privacy Protection Act) 
+                    Next Billion Lab is committed to protecting the privacy of our students, especially minors.
+                    We comply with applicable data protection laws including COPPA (Children's Online Privacy Protection Act)
                     and GDPR where applicable. We collect only the minimum data necessary to provide our educational services.
                   </p>
                 </section>
 
                 <section>
                   <h2 className="text-xl font-semibold mb-4 text-foreground">2. Information We Collect</h2>
-                  
+
                   <h3 className="text-lg font-medium mt-4 mb-2 text-foreground">From Students:</h3>
                   <ul className="list-disc list-inside text-muted-foreground space-y-1">
                     <li>First name (required)</li>
@@ -126,8 +126,8 @@ export default function Privacy() {
                 <section>
                   <h2 className="text-xl font-semibold mb-4 text-foreground">8. Data Retention</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    We retain student data for as long as the account is active, plus 2 years for certificate verification 
-                    purposes. Upon request, we will delete all personal data within 30 days, except where required by law 
+                    We retain student data for as long as the account is active, plus 2 years for certificate verification
+                    purposes. Upon request, we will delete all personal data within 30 days, except where required by law
                     to retain certain records.
                   </p>
                 </section>
@@ -135,7 +135,7 @@ export default function Privacy() {
                 <section>
                   <h2 className="text-xl font-semibold mb-4 text-foreground">9. Cookies and Tracking</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    We use essential cookies for authentication and platform functionality. We do not use 
+                    We use essential cookies for authentication and platform functionality. We do not use
                     advertising or tracking cookies. Analytics data is anonymized and used only to improve the platform.
                   </p>
                 </section>
@@ -143,7 +143,7 @@ export default function Privacy() {
                 <section>
                   <h2 className="text-xl font-semibold mb-4 text-foreground">10. Changes to This Policy</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    We may update this policy to reflect changes in our practices or for legal reasons. 
+                    We may update this policy to reflect changes in our practices or for legal reasons.
                     We will notify registered users of material changes via email.
                   </p>
                 </section>

@@ -5,6 +5,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const ALLOWED_ORIGINS = [
   "http://localhost:5173",
   "http://localhost:3000",
+  "http://192.168.0.9:8080",
+  "http://192.168.0.9:5173",
   "https://nextbillionlab.com",
   "https://www.nextbillionlab.com",
   "https://app.nextbillionlab.com",
@@ -24,7 +26,7 @@ interface AuthResult {
  */
 export async function verifyAuth(req: Request): Promise<AuthResult> {
   const authHeader = req.headers.get("Authorization");
-  
+
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return { authenticated: false, error: "Missing or invalid authorization header" };
   }
@@ -100,7 +102,7 @@ export function checkRateLimit(
  */
 export function getCorsHeaders(origin: string | null): Record<string, string> {
   const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
-  
+
   return {
     "Access-Control-Allow-Origin": allowedOrigin,
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",

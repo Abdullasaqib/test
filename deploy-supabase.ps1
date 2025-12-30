@@ -18,6 +18,9 @@ supabase functions deploy upload-pitch-video
 
 Write-Host "📦 Deploying log-client-error function..." -ForegroundColor Green
 supabase functions deploy log-client-error
+ 
+Write-Host "📦 Deploying evaluate-sprint-response function..." -ForegroundColor Green
+supabase functions deploy evaluate-sprint-response
 
 Write-Host "✅ All functions deployed successfully!" -ForegroundColor Green
 Write-Host ""

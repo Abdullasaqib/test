@@ -13,6 +13,7 @@ interface CertificationProgressCardProps {
   isEnrolled: boolean;
   isCompleted: boolean;
   certificationName?: string;
+  certificationSlug?: string;
 }
 
 export function CertificationProgressCard({
@@ -20,7 +21,8 @@ export function CertificationProgressCard({
   totalLessons,
   isEnrolled,
   isCompleted,
-  certificationName = "AI Foundations Certificate"
+  certificationName = "AI Foundations Certificate",
+  certificationSlug = "prompt-engineering-fundamentals"
 }: CertificationProgressCardProps) {
   const { isDemoMode } = useDemoMode();
   const progress = totalLessons > 0 ? (lessonsCompleted / totalLessons) * 100 : 0;
@@ -43,9 +45,9 @@ export function CertificationProgressCard({
               <Award className="h-3 w-3" />
               NEXT_ CERTIFIED
             </Badge>
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               className="text-primary text-xs h-8"
               onClick={() => {
                 const shareUrl = encodeURIComponent(window.location.origin);
@@ -71,14 +73,24 @@ export function CertificationProgressCard({
           <p className="text-sm text-muted-foreground">
             You've proven you can adapt to whatever comes next. Now unlock the full founder journey.
           </p>
-          <DemoCTAWrapper action="view pricing options">
-            <Link to="/pricing">
-              <Button className="w-full bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90">
-                Build What's NEXT_
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-            </Link>
-          </DemoCTAWrapper>
+          <div className="grid grid-cols-2 gap-3">
+            <DemoCTAWrapper action="view your certificate">
+              <Link to={`/dashboard/certification/${certificationSlug}`}>
+                <Button variant="outline" className="w-full gap-2 border-amber-500/30 text-amber-600 hover:bg-amber-500/10">
+                  <Award className="h-4 w-4" />
+                  View Certificate
+                </Button>
+              </Link>
+            </DemoCTAWrapper>
+            <DemoCTAWrapper action="view pricing options">
+              <Link to="/pricing">
+                <Button className="w-full bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90">
+                  Build NEXT_
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </Link>
+            </DemoCTAWrapper>
+          </div>
         </CardContent>
       </Card>
     );
@@ -105,7 +117,7 @@ export function CertificationProgressCard({
             <Progress value={progress} className="h-2" />
           </div>
           <DemoCTAWrapper action="continue learning">
-            <Link to="/dashboard/certification/prompt-engineering-fundamentals">
+            <Link to={`/dashboard/certification/${certificationSlug}`}>
               <Button className="w-full" variant="default">
                 Continue Learning
                 <ArrowRight className="h-4 w-4 ml-2" />
