@@ -7,13 +7,17 @@ import { HybridWeekProgress } from "@/hooks/useHybridCurriculum";
 
 interface HybridWeekCardProps {
   week: HybridWeekProgress;
+  isActiveWeek?: boolean;
 }
 
-export function HybridWeekCard({ week }: HybridWeekCardProps) {
+export function HybridWeekCard({ week, isActiveWeek }: HybridWeekCardProps) {
   const isLocked = week.status === 'locked';
   const isCompleted = week.status === 'completed';
+  // Use explicit isActiveWeek prop if provided, otherwise fallback to status check
+  // This ensures we only show "You're here!" on one card even if multiple are in_progress
   const isCurrent = week.status === 'current' || week.status === 'in_progress';
-  
+  const showBadge = isActiveWeek !== undefined ? isActiveWeek : isCurrent;
+
   const totalItems = week.base44Lessons.length + week.totalMissions;
   const completedItems = week.completedLessons + week.completedMissions;
   const progress = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
@@ -22,7 +26,7 @@ export function HybridWeekCard({ week }: HybridWeekCardProps) {
   const hasMissions = week.totalMissions > 0;
 
   return (
-    <Card 
+    <Card
       className={cn(
         "relative overflow-hidden transition-all duration-300",
         isLocked && "opacity-60",
@@ -31,10 +35,10 @@ export function HybridWeekCard({ week }: HybridWeekCardProps) {
       )}
     >
       {/* Current week indicator */}
-      {isCurrent && (
+      {showBadge && (
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
       )}
-      
+
       {/* Completed badge */}
       {isCompleted && (
         <div className="absolute top-2 right-2">
@@ -56,7 +60,7 @@ export function HybridWeekCard({ week }: HybridWeekCardProps) {
           )}>
             {isLocked ? <Lock className="h-5 w-5 text-muted-foreground" /> : week.emoji}
           </div>
-          
+
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <span className={cn(
@@ -67,7 +71,7 @@ export function HybridWeekCard({ week }: HybridWeekCardProps) {
               )}>
                 Week {week.week}
               </span>
-              {isCurrent && (
+              {showBadge && (
                 <span className="text-xs text-primary font-medium flex items-center gap-1">
                   <Sparkles className="h-3 w-3" />
                   You're here!
@@ -91,8 +95,8 @@ export function HybridWeekCard({ week }: HybridWeekCardProps) {
           {hasLessons && (
             <div className={cn(
               "flex items-center gap-1.5 px-2 py-1 rounded-md",
-              week.completedLessons === week.base44Lessons.length 
-                ? "bg-yellow-500/10 text-yellow-600" 
+              week.completedLessons === week.base44Lessons.length
+                ? "bg-yellow-500/10 text-yellow-600"
                 : "bg-muted text-muted-foreground"
             )}>
               <BookOpen className="h-3 w-3" />
@@ -102,8 +106,8 @@ export function HybridWeekCard({ week }: HybridWeekCardProps) {
           {hasMissions && (
             <div className={cn(
               "flex items-center gap-1.5 px-2 py-1 rounded-md",
-              week.completedMissions === week.totalMissions 
-                ? "bg-blue-500/10 text-blue-600" 
+              week.completedMissions === week.totalMissions
+                ? "bg-blue-500/10 text-blue-600"
                 : "bg-muted text-muted-foreground"
             )}>
               <Wrench className="h-3 w-3" />
@@ -117,14 +121,14 @@ export function HybridWeekCard({ week }: HybridWeekCardProps) {
           <div className="h-2 bg-muted rounded-full overflow-hidden flex">
             {/* Lessons progress (yellow) */}
             {hasLessons && (
-              <div 
+              <div
                 className="h-full bg-yellow-500 transition-all duration-300"
                 style={{ width: `${(week.completedLessons / totalItems) * 100}%` }}
               />
             )}
             {/* Missions progress (blue/primary) */}
             {hasMissions && (
-              <div 
+              <div
                 className={cn(
                   "h-full transition-all duration-300",
                   isCompleted ? "bg-green-500" : "bg-primary"
@@ -151,8 +155,8 @@ export function HybridWeekCard({ week }: HybridWeekCardProps) {
           <div className="flex items-center gap-2 text-xs">
             <span className={cn(
               "px-2 py-0.5 rounded-full font-medium",
-              week.base44Lessons[0]?.module === 'PLAN' 
-                ? "bg-emerald-500/10 text-emerald-600" 
+              week.base44Lessons[0]?.module === 'PLAN'
+                ? "bg-emerald-500/10 text-emerald-600"
                 : "bg-purple-500/10 text-purple-600"
             )}>
               Base44 {week.base44Lessons[0]?.module} Module
@@ -168,8 +172,8 @@ export function HybridWeekCard({ week }: HybridWeekCardProps) {
             </span>
           </div>
         ) : (
-          <Button 
-            variant={isCurrent ? "default" : "outline"} 
+          <Button
+            variant={isCurrent ? "default" : "outline"}
             className="w-full"
             asChild
           >

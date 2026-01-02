@@ -10,15 +10,15 @@ import { Button } from "@/components/ui/button";
 
 export default function DashboardCurriculum() {
   const navigate = useNavigate();
-  const { 
-    weekProgress, 
-    currentWeek, 
-    totalCompletedMissions, 
-    totalMissions, 
+  const {
+    weekProgress,
+    currentWeek,
+    totalCompletedMissions,
+    totalMissions,
     totalCompletedLessons,
     totalLessons,
-    overallProgress, 
-    isLoading 
+    overallProgress,
+    isLoading
   } = useHybridCurriculum();
   const [loadingTimeout, setLoadingTimeout] = useState(false);
 
@@ -96,7 +96,7 @@ export default function DashboardCurriculum() {
   }
 
   return (
-    <DashboardLayout currentWeek={currentWeek} totalWeeks={12}>
+    <DashboardLayout>
       <div className="space-y-6">
         {/* Hero Header */}
         <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-accent/10 via-background to-accent/5 p-6 border border-accent/20">
@@ -113,7 +113,7 @@ export default function DashboardCurriculum() {
             <p className="text-muted-foreground max-w-xl mt-2">
               {getEncouragingMessage()}
             </p>
-            
+
             {/* Quick Stats */}
             <div className="flex flex-wrap gap-3 mt-4">
               <div className="flex items-center gap-2 bg-background/80 backdrop-blur-sm rounded-lg px-3 py-2">
@@ -134,7 +134,7 @@ export default function DashboardCurriculum() {
               </div>
             </div>
           </div>
-          
+
           {/* Decorative element */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
         </div>
@@ -171,13 +171,17 @@ export default function DashboardCurriculum() {
         {/* Week Cards Grid */}
         <div>
           <h2 className="text-lg font-semibold mb-4">
-            {currentWeek <= 4 ? "📋 PLAN Module (Weeks 1-4)" : 
-             currentWeek <= 8 ? "🎯 PROMPT Module (Weeks 5-8)" : 
-             "🚀 Launch Phase (Weeks 9-12)"}
+            {currentWeek <= 4 ? "📋 PLAN Module (Weeks 1-4)" :
+              currentWeek <= 8 ? "🎯 PROMPT Module (Weeks 5-8)" :
+                "🚀 Launch Phase (Weeks 9-12)"}
           </h2>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {weekProgress.map((week) => (
-              <HybridWeekCard key={week.week} week={week} />
+              <HybridWeekCard
+                key={week.week}
+                week={week}
+                isActiveWeek={week.week === currentWeek}
+              />
             ))}
           </div>
         </div>
