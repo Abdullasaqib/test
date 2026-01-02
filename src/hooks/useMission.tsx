@@ -208,7 +208,7 @@ export function useMission() {
           mission_id: currentMission.id,
           status: 'in_progress',
           started_at: new Date().toISOString(),
-        })
+        }, { onConflict: 'student_id, mission_id' })
         .select()
         .single();
 

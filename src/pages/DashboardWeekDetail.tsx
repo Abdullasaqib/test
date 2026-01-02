@@ -2,38 +2,37 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { 
-  ArrowLeft, 
-  Play, 
-  CheckCircle, 
+import {
+  ArrowLeft,
+  Play,
+  CheckCircle,
   Lock,
   Clock,
   Sparkles,
   ChevronRight,
-  MessageCircle
+  MessageCircle,
+  BookOpen
 } from "lucide-react";
-import { useJourney, WeekProgress } from "@/hooks/useJourney";
+import { useHybridCurriculum } from "@/hooks/useHybridCurriculum"; // Switched hook
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardWeekDetail() {
   const { weekNumber } = useParams();
   const navigate = useNavigate();
-  const { weekProgress, currentWeek, isLoading, weekThemes } = useJourney();
-  
+  // using useHybridCurriculum instead of useJourney for Base44 lessons support
+  const { weekProgress, currentWeek, isLoading, weekThemes } = useHybridCurriculum();
+
   const weekNum = parseInt(weekNumber || "1");
   const week = weekProgress.find(w => w.week === weekNum);
   const theme = weekThemes[weekNum];
 
   // Get encouraging progress message
-  const getProgressMessage = (week: WeekProgress) => {
-    const { completedMissions, totalMissions } = week;
-    if (completedMissions === 0) return "Ready to start? Let's find your big idea! 💡";
-    if (completedMissions === 1) return "Great start! One down, let's keep going! 🔥";
-    if (completedMissions === 2) return "You're on a roll! 🎯";
-    if (completedMissions === 3) return "Halfway through the week! ⚡";
-    if (completedMissions === 4) return "Almost there! One more mission! 🌟";
-    if (completedMissions >= totalMissions) return "WEEK COMPLETE! You crushed it! 🎉";
+  const getProgressMessage = (completed: number, total: number) => {
+    if (completed === 0) return "Ready to start? Let's find your big idea! 💡";
+    if (completed === 1) return "Great start! One down, let's keep going! 🔥";
+    if (completed === 2) return "You're on a roll! 🎯";
+    if (completed >= total && total > 0) return "WEEK COMPLETE! You crushed it! 🎉";
     return "Keep going, you've got this! 💪";
   };
 
@@ -67,12 +66,14 @@ export default function DashboardWeekDetail() {
   }
 
   const isLocked = week.status === 'locked';
+  const totalItems = week.base44Lessons.length + week.totalMissions;
+  const completedItems = week.completedLessons + week.completedMissions;
 
   return (
-    <DashboardLayout currentWeek={currentWeek} totalWeeks={12}>
+    <DashboardLayout>
       <div className="space-y-6">
         {/* Back Button */}
-        <Link 
+        <Link
           to="/dashboard/curriculum"
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
         >
@@ -106,24 +107,28 @@ export default function DashboardWeekDetail() {
           <div className="mt-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-muted-foreground">
-                {week.completedMissions}/{week.totalMissions} missions
+                {completedItems}/{totalItems} completed
               </span>
               <span className="text-sm font-medium text-primary">
-                {getProgressMessage(week)}
+                {getProgressMessage(completedItems, totalItems)}
               </span>
             </div>
-            <div className="flex gap-1.5">
-              {Array.from({ length: week.totalMissions }).map((_, i) => (
-                <div 
-                  key={i}
-                  className={cn(
-                    "h-2 flex-1 rounded-full transition-colors",
-                    i < week.completedMissions 
-                      ? "bg-green-500" 
-                      : "bg-muted"
-                  )}
+            {/* Unified Progress Bar */}
+            <div className="flex h-2 bg-muted rounded-full overflow-hidden">
+              {/* Lessons Section (Yellow) */}
+              {week.base44Lessons.length > 0 && (
+                <div
+                  className="bg-yellow-500 transition-all duration-300"
+                  style={{ width: `${(week.completedLessons / totalItems) * 100}%` }}
                 />
-              ))}
+              )}
+              {/* Missions Section (Primary/Green) */}
+              {week.totalMissions > 0 && (
+                <div
+                  className={cn("transition-all duration-300", week.status === 'completed' ? "bg-green-500" : "bg-primary")}
+                  style={{ width: `${(week.completedMissions / totalItems) * 100}%` }}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -144,108 +149,156 @@ export default function DashboardWeekDetail() {
           </Card>
         )}
 
-        {/* Daily Missions */}
         {!isLocked && (
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" />
-              Your 5 Missions This Week
-            </h2>
-            
-            {week.missions.map((mission, index) => {
-              const isCompleted = mission.status === 'completed';
-              const isInProgress = mission.status === 'in_progress';
-              const isAvailable = mission.status === 'available';
-              const isMissionLocked = mission.status === 'locked';
-              const isFirstAvailable = isAvailable && week.missions.slice(0, index).every(m => m.status === 'completed');
-
-              return (
-                <Card 
-                  key={mission.id}
-                  className={cn(
-                    "transition-all",
-                    isFirstAvailable && "ring-2 ring-primary shadow-md",
-                    isCompleted && "border-green-500/30 bg-green-500/5",
-                    isMissionLocked && "opacity-60"
-                  )}
-                >
-                  <CardContent className="py-4">
-                    <div className="flex items-center gap-4">
-                      {/* Day indicator */}
-                      <div className={cn(
-                        "w-12 h-12 rounded-xl flex flex-col items-center justify-center flex-shrink-0",
-                        isCompleted && "bg-green-500/10 text-green-500",
-                        (isAvailable || isInProgress) && "bg-primary/10 text-primary",
-                        isMissionLocked && "bg-muted text-muted-foreground"
-                      )}>
-                        {isCompleted ? (
-                          <CheckCircle className="h-6 w-6" />
-                        ) : isMissionLocked ? (
-                          <Lock className="h-5 w-5" />
-                        ) : (
-                          <>
-                            <span className="text-xs font-medium">Day</span>
-                            <span className="text-lg font-bold leading-none">{mission.day}</span>
-                          </>
+          <div className="space-y-8">
+            {/* 1. Base44 Lessons Section (If available) */}
+            {week.base44Lessons.length > 0 && (
+              <div className="space-y-4">
+                <h2 className="text-lg font-semibold flex items-center gap-2">
+                  <BookOpen className="h-5 w-5 text-yellow-500" />
+                  Base44 Lessons
+                </h2>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {week.base44Lessons.map((lesson) => (
+                    <Card
+                      key={lesson.id}
+                      className={cn(
+                        "transition-all hover:border-yellow-500/50 cursor-pointer",
+                        lesson.isCompleted ? "bg-yellow-500/5 border-yellow-500/20" : "bg-card"
+                      )}
+                      onClick={() => navigate(`/dashboard/certification/ai-founders-certificate/lesson/${lesson.id}`)}
+                    >
+                      <CardContent className="p-4 flex items-start gap-3">
+                        <div className={cn(
+                          "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+                          lesson.isCompleted ? "bg-yellow-500 text-white" : "bg-yellow-100 text-yellow-700"
+                        )}>
+                          {lesson.lessonOrder}
+                        </div>
+                        <div>
+                          <h3 className="font-medium leading-none mb-1.5 pt-1.5">{lesson.title}</h3>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <Clock className="h-3 w-3" />
+                            {lesson.estimatedMinutes} min
+                            <span className="px-1.5 py-0.5 rounded-full bg-muted border text-[10px] font-mono uppercase">
+                              {lesson.module}
+                            </span>
+                          </div>
+                        </div>
+                        {lesson.isCompleted && (
+                          <CheckCircle className="ml-auto h-5 w-5 text-yellow-500" />
                         )}
-                      </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            )}
 
-                      {/* Mission info */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className={cn(
-                            "font-semibold truncate",
-                            isMissionLocked && "text-muted-foreground"
-                          )}>
-                            {mission.title}
-                          </h3>
-                          {isFirstAvailable && (
-                            <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0">
-                              Start Here! ⭐
+            {/* 2. Daily Missions Section */}
+            <div className="space-y-4">
+              <h2 className="text-lg font-semibold flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                Your Missions
+              </h2>
+
+              {week.missions.map((mission, index) => {
+                const isCompleted = mission.status === 'completed';
+                const isInProgress = mission.status === 'in_progress';
+                const isAvailable = mission.status === 'available';
+                const isMissionLocked = mission.status === 'locked';
+
+                // First available mission logic (simple version)
+                const isFirstAvailable = isAvailable && week.missions.slice(0, index).every(m => m.status === 'completed');
+
+                return (
+                  <Card
+                    key={mission.id}
+                    className={cn(
+                      "transition-all",
+                      isFirstAvailable && "ring-2 ring-primary shadow-md",
+                      isCompleted && "border-green-500/30 bg-green-500/5",
+                      isMissionLocked && "opacity-60"
+                    )}
+                  >
+                    <CardContent className="py-4">
+                      <div className="flex items-center gap-4">
+                        {/* Day indicator */}
+                        <div className={cn(
+                          "w-12 h-12 rounded-xl flex flex-col items-center justify-center flex-shrink-0",
+                          isCompleted && "bg-green-500/10 text-green-500",
+                          (isAvailable || isInProgress) && "bg-primary/10 text-primary",
+                          isMissionLocked && "bg-muted text-muted-foreground"
+                        )}>
+                          {isCompleted ? (
+                            <CheckCircle className="h-6 w-6" />
+                          ) : isMissionLocked ? (
+                            <Lock className="h-5 w-5" />
+                          ) : (
+                            <>
+                              <span className="text-xs font-medium">Day</span>
+                              <span className="text-lg font-bold leading-none">{mission.day}</span>
+                            </>
+                          )}
+                        </div>
+
+                        {/* Mission info */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className={cn(
+                              "font-semibold truncate",
+                              isMissionLocked && "text-muted-foreground"
+                            )}>
+                              {mission.title}
+                            </h3>
+                            {isFirstAvailable && (
+                              <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0">
+                                Start Here! ⭐
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                            <span className="flex items-center gap-1">
+                              <Clock className="h-3 w-3" />
+                              {mission.estimatedMinutes} min
+                            </span>
+                            {mission.subtitle && (
+                              <span className="truncate hidden sm:inline">{mission.subtitle}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Action */}
+                        <div className="flex-shrink-0">
+                          {isCompleted ? (
+                            <Button variant="ghost" size="sm" asChild>
+                              <Link to={`/dashboard/mission`}>
+                                Review
+                              </Link>
+                            </Button>
+                          ) : (isAvailable || isInProgress) ? (
+                            <Button
+                              variant={isFirstAvailable ? "default" : "outline"}
+                              size="sm"
+                              asChild
+                            >
+                              <Link to={`/dashboard/mission`}>
+                                {isInProgress ? "Continue" : "Start"}
+                                <ChevronRight className="ml-1 h-4 w-4" />
+                              </Link>
+                            </Button>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">
+                              🔒 Locked
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            {mission.estimated_minutes} min
-                          </span>
-                          {mission.subtitle && (
-                            <span className="truncate">{mission.subtitle}</span>
-                          )}
-                        </div>
                       </div>
-
-                      {/* Action */}
-                      <div className="flex-shrink-0">
-                        {isCompleted ? (
-                          <Button variant="ghost" size="sm" asChild>
-                            <Link to={`/dashboard/mission`}>
-                              Review
-                            </Link>
-                          </Button>
-                        ) : (isAvailable || isInProgress) ? (
-                          <Button 
-                            variant={isFirstAvailable ? "default" : "outline"} 
-                            size="sm"
-                            asChild
-                          >
-                            <Link to={`/dashboard/mission`}>
-                              {isInProgress ? "Continue" : "Start"}
-                              <ChevronRight className="ml-1 h-4 w-4" />
-                            </Link>
-                          </Button>
-                        ) : (
-                          <span className="text-xs text-muted-foreground">
-                            🔒 Locked
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
         )}
 

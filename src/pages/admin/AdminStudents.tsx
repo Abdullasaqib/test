@@ -469,10 +469,10 @@ export default function AdminStudents() {
                     </Button>
                   </PaginationItem>
                   {[...Array(Math.min(5, totalPages))].map((_, i) => {
-                    const page = currentPage <= 3 
-                      ? i + 1 
-                      : currentPage >= totalPages - 2 
-                        ? totalPages - 4 + i 
+                    const page = currentPage <= 3
+                      ? i + 1
+                      : currentPage >= totalPages - 2
+                        ? totalPages - 4 + i
                         : currentPage - 2 + i;
                     if (page < 1 || page > totalPages) return null;
                     return (

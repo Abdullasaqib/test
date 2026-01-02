@@ -46,13 +46,16 @@ export function MissionSprintView({
   const hasQuiz = currentSprint?.quiz_questions && currentSprint.quiz_questions.length > 0;
   const isSprintCompleted = currentSprint && completedSprintIds.includes(currentSprint.id);
 
-  // Find first incomplete sprint on mount
+  // Find first incomplete sprint on mount only
   useEffect(() => {
-    const firstIncomplete = sprints.findIndex(s => !completedSprintIds.includes(s.id));
-    if (firstIncomplete !== -1) {
-      setCurrentSprintIndex(firstIncomplete);
+    if (sprints.length > 0) {
+      const firstIncomplete = sprints.findIndex(s => !completedSprintIds.includes(s.id));
+      if (firstIncomplete !== -1) {
+        setCurrentSprintIndex(firstIncomplete);
+      }
     }
-  }, [sprints, completedSprintIds]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mission.id]); // Only run when mission changes, not when progress updates
 
   const handleContinue = async () => {
     if (hasQuiz && !isSprintCompleted) {
@@ -65,7 +68,7 @@ export function MissionSprintView({
   const handleSprintComplete = async (quizScore?: number) => {
     if (isCompleting) return;
     setIsCompleting(true);
-    
+
     await onSprintComplete(currentSprint.id, quizScore);
 
     // Show celebration
@@ -85,10 +88,10 @@ export function MissionSprintView({
     timeoutRef.current = setTimeout(() => {
       setShowCelebration(false);
       setShowQuiz(false);
-      
+
       // Calculate isLastSprint INSIDE the timeout with fresh value
       const isLastSprint = currentSprintIndex === sprints.length - 1;
-      
+
       if (isLastSprint) {
         onMissionComplete();
       } else {
@@ -150,13 +153,13 @@ export function MissionSprintView({
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <p className="text-muted-foreground mb-4">Something went wrong loading the sprint.</p>
-          <Button 
+          <Button
             onClick={() => {
               setCurrentSprintIndex(0);
               setShowQuiz(false);
               setShowCelebration(false);
               setIsCompleting(false);
-            }} 
+            }}
             variant="outline"
             className="gap-2"
           >
@@ -176,7 +179,7 @@ export function MissionSprintView({
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-border px-4 py-3">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-2">
-            <button 
+            <button
               onClick={onBack}
               className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
@@ -188,7 +191,7 @@ export function MissionSprintView({
               {Math.ceil(currentSprint.estimated_seconds / 60)} min
             </div>
           </div>
-          
+
           {/* Sprint Progress Dots */}
           <div className="flex items-center justify-center gap-2">
             {sprints.map((sprint, index) => (
@@ -199,17 +202,16 @@ export function MissionSprintView({
                   scale: index === currentSprintIndex ? 1.3 : 1,
                   opacity: index <= currentSprintIndex || completedSprintIds.includes(sprint.id) ? 1 : 0.4,
                 }}
-                className={`h-2 rounded-full transition-all ${
-                  completedSprintIds.includes(sprint.id)
+                className={`h-2 rounded-full transition-all ${completedSprintIds.includes(sprint.id)
                     ? "bg-green-500 w-2"
                     : index === currentSprintIndex
-                    ? "bg-primary w-5"
-                    : "bg-muted w-2"
-                }`}
+                      ? "bg-primary w-5"
+                      : "bg-muted w-2"
+                  }`}
               />
             ))}
           </div>
-          
+
           <p className="text-center text-xs text-muted-foreground mt-2">
             Day {mission.day_number} • Sprint {currentSprintIndex + 1} of {sprints.length}
           </p>
